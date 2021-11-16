@@ -10,6 +10,10 @@ parameter FAST_SIM = 1'b1;
 logic [23:0] bit_counter;
 logic [11:0] frequency_counter;
 logic clear_counter;
+localparam G6 = 12'd1568;
+localparam G7 = 12'd3136;
+localparam C7 = 12'd2093;
+localparam E7 = 12'd2637;
 
 ///////////////////////////////////////////////////////////////
 // Duration Counter                                         //        
@@ -17,13 +21,15 @@ logic clear_counter;
 always_ff @(posedge clk) begin
     if(clear_counter)
         duration_counter <= 24'b0000;
+    else if(FAST_SIM)
+        duration_counter <= duration_counter + 16;
     else
         duration_counter <= duration_counter + 1;
 end
 
-assign done22 = FAST_SIM ? duration_counter==24'h40000: duration_counter==24'h400000;
-assign done23 = FAST_SIM ? duration_counter==24'h80000: duration_counter==24'h800000;
-assign done24 = FAST_SIM ? duration_counter==24'hFFFF: duration_counter==24'hFFFFF;
+assign done22 = duration_counter==24'h400000;
+assign done23 = duration_counter==24'h800000;
+assign done24 = duration_counter==24'hFFFFF;
 
 ///////////////////////////////////////////////////////////////
 // Frequency Counter                                        //
@@ -31,17 +37,11 @@ assign done24 = FAST_SIM ? duration_counter==24'hFFFF: duration_counter==24'hFFF
 always_ff @(posedge clk) begin
     if(clear_counter)
         frequency_counter <= 12'b0000;
+    else if(FAST_SIM)
+        frequency_counter <= frequency_counter + 16;
     else
         frequency_counter <= frequency_counter + 1;
 end
-
-///////////////////////////////////////////////////////////////
-// FAST_SIM logic for Note Frequency                        //
-/////////////////////////////////////////////////////////////
-assign G6 = FAST_SIM ? frequency_counter==(12'd1568/12'd16): frequency_counter== 12'd1568;
-assign G7 = FAST_SIM ? frequency_counter==(12'd3136/12'd16): frequency_counter== 12'd3136;
-assign C7 = FAST_SIM ? frequency_counter==(12'd2093/12'd16): frequency_counter== 12'd2093;
-assign E7 = FAST_SIM ? frequency_counter==(12'd2637/12'd16): frequency_counter== 12'd2637;
 
 ///////////////////////////////////////////////////////////////
 // Assign output of piezo_n                                 //
@@ -51,7 +51,7 @@ assign piezo_n = ~piezo;
 ///////////////////////////////////////////////////////////////
 // State Machine State Declarations                         //
 /////////////////////////////////////////////////////////////
-typedef enum reg [1:0] {IDLE, FP, TRANS, BP} state_t;
+typedef enum reg [3:0] {IDLE, NOTE1, NOTE2, NOTE3, NOTE4_1, NOTE4_2, NOTE5, NOTE6} state_t;
 state_t state, nxt_state;
 
 ///////////////////////////////////////////////////////////////
@@ -68,21 +68,73 @@ always_ff@(posedge clk, negedge rst_n)
 /////////////////////////////////////////////////////////////
 always_comb begin
     // defaulting outputs
-    clear_counter = 1;
+    clear_counter = 0;
+    piezo = 0;
     nxt_state = state;
 
     case(state)
         IDLE: begin
-            ld_SCLK = 1;
             if(go) begin
-                clear counter = 1;
-                nxt_state = FP;
+                clear_counter = 1;
+                nxt_state = NOTE1;
             end
         end
-        G6: begin
+        NOTE1: begin
+            piezo = 1;
+            if(done23)begin
+                clear_counter = 1;
+                nxt_state = NOTE2;
+            end
             
         end
-        
+        NOTE2: begin
+            piezo = 1;
+            if(done23)begin
+                clear_counter = 1;
+                nxt_state = NOTE3;
+            end
+            
+        end
+        NOTE3: begin
+            piezo = 1;
+            if(done23)begin
+                clear_counter = 1;
+                nxt_state = NOTE4_1;
+            end
+            
+        end
+        NOTE4_1: begin
+            piezo = 1;
+            if(done23)begin
+                clear_counter = 1;
+                nxt_state = NOTE4_2;
+            end
+            
+        end
+        NOTE4_2: begin
+            piezo = 1;
+            if(done23)begin
+                clear_counter = 1;
+                nxt_state = NOTE5;
+            end
+            
+        end
+        NOTE5: begin
+            piezo = 1;
+            if(done22)begin
+                clear_counter = 1;
+                nxt_state = NOTE6;
+            end
+            
+        end
+        NOTE6: begin
+            piezo = 1;
+            if(done24)begin
+                clear_counter = 1;
+                nxt_state = IDLE;
+            end
+            
+        end
         
         default:
             nxt_state = IDLE;
