@@ -17,10 +17,10 @@ read_file -format sverilog { ./KnightsTour.sv\
 read_file -format sverilog { ./UART.v}
 
 # Set Current Design to top level
-set current_design UART
+set current_design KnightsTour
 
 # Constrain and assign clock with 50% duty cycle
-create_clock -name "clk" -period 2 -waveform {0 1} {clk}
+create_clock -name "clk" -period 3 -waveform {0 1} {clk}
 
 # Constrain input timings and Drive
 set_dont_touch_network [find port clk]
@@ -39,8 +39,11 @@ set_load 0.1 [all_outputs]
 set_max_transition 0.15 [current_design]
 set_wire_load_model -name 16000 -library saed32rvt_tt0p85v25c
 
+# Set clock uncertainty
+set_clock_uncertainty 0.15 clk
+
 # Write out resulting synthesized netlist
-write -format verilog UART -output UART.vg
+write -format verilog UART -output KnightsTour.vg
 
 # Compile the design
 compile -map_effort medium
@@ -54,9 +57,9 @@ compile -map_effort medium
 # generate timing and area reports
 report_timing -delay max > max_delay.rpt
 report_timing -delay min > min_delay.rpt
-report_area > UART_area.txt
+report_area > KnightsTour_area.txt
 
 # write out resulting synthesized netlist
-write -format verilog UART -output UART.vg
+write -format verilog KnightsTour -output KnightsTour.vg
 
-write_sdc UART.sdc
+write_sdc KnightsTour.sdc
