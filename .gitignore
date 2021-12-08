@@ -3,3 +3,4 @@ synthesis/*.syn
 synthesis/*.svf
 synthesis/*.mr
 synthesis/*.pvl
+*.swp
