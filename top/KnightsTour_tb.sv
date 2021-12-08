@@ -38,7 +38,7 @@ module KnightsTour_tb();
   //<< This is my remoteComm.  It is possible yours has a slight variation
   //   in port names>>
   RemoteComm iRMT(.clk(clk), .rst_n(RST_n), .RX(RX_TX), .TX(TX_RX), .cmd(cmd),
-             .send_cmd(send_cmd), .cmd_sent(cmd_sent), .resp_rdy(resp_rdy), .resp(resp));
+             .snd_cmd(send_cmd), .cmd_snt(cmd_sent), .resp_rdy(resp_rdy), .resp(resp));
 				   
   //////////////////////////////////////////////////////
   // Instantiate model of Knight Physics (and board) //
@@ -50,8 +50,8 @@ module KnightsTour_tb();
 				   
   initial begin
   
-  //  << Your magic here >>
-	
+  	$display("Our code runs!");
+	$stop();
   end
   
   always
