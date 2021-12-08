@@ -3,6 +3,7 @@ read_file -format sverilog { ./../top/KnightsTour.sv\
 			    ./../physical/reset_synch.sv\
                 ./../intf/inert_intf.sv\
 		./../intf/inertial_integrator.sv\
+		./../intf/IR_intf.sv\
                 ./../comm/SPI_mnrch.sv\
                 ./../tour/TourLogic.sv\
                 ./../tour/TourCmd.sv\
@@ -11,6 +12,7 @@ read_file -format sverilog { ./../top/KnightsTour.sv\
                 ./../comm/UART_tx.sv\
                 ./../comm/UART_rx.sv\
                 ./../motion/PID.sv\
+                ./../motion/PWM11.sv\
 		./../motion/MtrDrv.sv\
 		./../tour/charge.sv\
 		./../comm/UART.sv\
@@ -54,6 +56,12 @@ ungroup -all -flatten
 # Second compile
 compile -map_effort medium
 
+# Fix hold time issues
+set_fix_hold clk
+
+# Final compile
+compile -map_effort medium
+
 # generate timing and area reports
 report_timing -delay max > max_delay.txt
 report_timing -delay min > min_delay.txt
@@ -62,6 +70,7 @@ report_area > KnightsTour_area.txt
 # write out resulting synthesized netlist
 write -format verilog KnightsTour -output KnightsTour.vg
 
-write_sdc KnightsTour.txt
+# write out settings
+write_sdc KnightsTour_sdc.txt
 
 exit
