@@ -14,7 +14,7 @@ logic [10:0] l_duty, r_duty;
 assign l_duty = lft_spd + 11'h400;
 assign r_duty = rght_spd + 11'h400;
 
-PWM11 l_pwm(.clk(clk),.rst_n(rst_n),.duty(l_duty),.PWM_sig(lftPWM2),.PWM_sig_n(lftPWM1));
-PWM11 r_pwm(.clk(clk),.rst_n(rst_n),.duty(r_duty),.PWM_sig(rghtPWM2),.PWM_sig_n(rghtPWM1));
+PWM11 l_pwm(.clk(clk),.rst_n(rst_n),.duty(l_duty),.PWM_sig(lftPWM1),.PWM_sig_n(lftPWM2));
+PWM11 r_pwm(.clk(clk),.rst_n(rst_n),.duty(r_duty),.PWM_sig(rghtPWM1),.PWM_sig_n(rghtPWM2));
 
 endmodule
