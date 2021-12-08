@@ -9,7 +9,7 @@ module charge #(
 /////////////////////////////////////////////////////////////
 logic [24:0] duration_counter;
 logic [14:0] frequency_counter;
-logic clear_duration, clear_frequency;
+logic clear_duration, clear_frequency, done22, done23, done24;
 logic nxt_piezo;
 logic [4:0] increment;
 localparam G6 = 15'd31887;  // (50 MHz / 1568)
