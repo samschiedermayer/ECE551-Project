@@ -14,7 +14,7 @@ module KnightsTour(
   input rghtIR_n						// goes low if right IR encounters a rail
 );
  
-  localparam FAST_SIM = 1;				// used to speed up simulation
+  localparam FAST_SIM = 0;				// used to speed up simulation
 
   ////////////////////////
   // Internals signals //
@@ -82,7 +82,7 @@ module KnightsTour(
   /////////////////////////////////////
   // Instantiate inertial interface //
   ///////////////////////////////////
-  inert_intf #(FAST_SIM) iNEMO(.clk(clk),.rst_n(rst_n),.strt_cal(strt_cal),
+  inert_intf #(FAST_SIM) iINERT(.clk(clk),.rst_n(rst_n),.strt_cal(strt_cal),
              .cal_done(cal_done),.heading(heading),.rdy(heading_rdy),.lftIR(lftIR),
 			 .rghtIR(rghtIR),.SS_n(SS_n),.SCLK(SCLK),.MOSI(MOSI),
 			 .MISO(MISO),.INT(INT),.moving(moving));
