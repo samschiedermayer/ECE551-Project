@@ -27,7 +27,7 @@ localparam START_COMMAND = 4'b0100;
 //////////////////////////////
 // Define internal signals //
 ////////////////////////////
-logic move_command, forward_en, decrement_forward, increment_forward, clear_forward, zero, max_speed, old_centerIR, centerIR_edge;
+logic move_command, move_done, forward_en, decrement_forward, increment_forward, clear_forward, zero, max_speed, old_centerIR, centerIR_edge;
 logic [2:0] center_line_counter;
 logic [3:0] number_of_squares_2x;
 logic [11:0] desired_heading, error_nudge;

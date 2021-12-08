@@ -55,7 +55,7 @@ module inert_intf(clk,rst_n,strt_cal,cal_done,heading,rdy,lftIR,
   //////////////////////////////////////////////
   // Declare outputs of SM are of type logic //
   ////////////////////////////////////////////
-  logic vld, wrt;
+  logic vld, wrt, done;
   logic [15:0] cmd;
   
   

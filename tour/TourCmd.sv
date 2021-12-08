@@ -67,6 +67,7 @@ always_comb begin
    increment = 0;
    cmd_rdy_tour = 0;
    nxt_state = state;
+   cmd_tour = 16'h0000;
 
    case(state)
       IDLE: begin
