@@ -39,7 +39,7 @@ logic [11:0] desired_heading, error_nudge;
 always_ff @(posedge clk, negedge rst_n) begin
     if (!rst_n) begin
         forward <= 10'h000;
-    end if (clear_forward) begin
+    end else if (clear_forward) begin
         forward <= 10'h000;
     end else if (forward_en) begin
         if (increment_forward) begin
@@ -79,7 +79,7 @@ always_ff @(posedge clk) begin
     if (move_command) begin
         center_line_counter <= 0;
     end else if (centerIR_edge) begin
-        center_line_counter++;
+        center_line_counter <= center_line_counter + 1'b1;
     end
 end
 
