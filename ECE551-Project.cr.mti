@@ -76,19 +76,19 @@ QuestaSim vlog 2021.2_2 Compiler 2021.06 Jun 19 2021
 Top level modules:
 	IR_intf
 
-} {} {}} /filespace/s/sschiedermay/ECE551/ECE551-Project/physical/TourLogic.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/s/sschiedermay/ECE551/ECE551-Project/physical/TourLogic.sv
-QuestaSim vlog 2021.2_2 Compiler 2021.06 Jun 19 2021
--- Compiling module TourLogic
-
-Top level modules:
-	TourLogic
-
 } {} {}} /filespace/s/sschiedermay/ECE551/ECE551-Project/motion/MtrDrv.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/s/sschiedermay/ECE551/ECE551-Project/motion/MtrDrv.sv
 QuestaSim vlog 2021.2_2 Compiler 2021.06 Jun 19 2021
 -- Compiling module MtrDrv
 
 Top level modules:
 	MtrDrv
+
+} {} {}} /filespace/s/sschiedermay/ECE551/ECE551-Project/physical/TourLogic.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/s/sschiedermay/ECE551/ECE551-Project/physical/TourLogic.sv
+QuestaSim vlog 2021.2_2 Compiler 2021.06 Jun 19 2021
+-- Compiling module TourLogic
+
+Top level modules:
+	TourLogic
 
 } {} {}} /filespace/s/sschiedermay/ECE551/ECE551-Project/intf/inertial_integrator.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/s/sschiedermay/ECE551/ECE551-Project/intf/inertial_integrator.sv
 QuestaSim vlog 2021.2_2 Compiler 2021.06 Jun 19 2021
@@ -104,13 +104,6 @@ QuestaSim vlog 2021.2_2 Compiler 2021.06 Jun 19 2021
 Top level modules:
 	UART_rx
 
-} {} {}} /filespace/s/sschiedermay/ECE551/ECE551-Project/top/KnightsTour_tb.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/s/sschiedermay/ECE551/ECE551-Project/top/KnightsTour_tb.sv
-QuestaSim vlog 2021.2_2 Compiler 2021.06 Jun 19 2021
--- Compiling module KnightsTour_tb
-
-Top level modules:
-	KnightsTour_tb
-
 } {} {}} /filespace/s/sschiedermay/ECE551/ECE551-Project/top/cmd_proc.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/s/sschiedermay/ECE551/ECE551-Project/top/cmd_proc.sv
 QuestaSim vlog 2021.2_2 Compiler 2021.06 Jun 19 2021
 -- Compiling module cmd_proc
@@ -118,13 +111,19 @@ QuestaSim vlog 2021.2_2 Compiler 2021.06 Jun 19 2021
 Top level modules:
 	cmd_proc
 
-} {} {}} /filespace/s/sschiedermay/ECE551/ECE551-Project/top/KnightPhysics.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/s/sschiedermay/ECE551/ECE551-Project/top/KnightPhysics.sv
+} {} {}} /filespace/s/sschiedermay/ECE551/ECE551-Project/top/KnightsTour_tb.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/s/sschiedermay/ECE551/ECE551-Project/top/KnightsTour_tb.sv
 QuestaSim vlog 2021.2_2 Compiler 2021.06 Jun 19 2021
--- Compiling module KnightPhysics
--- Compiling module inverse_PWM11e
+-- Compiling module KnightsTour_tb
 
 Top level modules:
-	KnightPhysics
+	KnightsTour_tb
+
+} {} {}} /filespace/s/sschiedermay/ECE551/ECE551-Project/motion/PID.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/s/sschiedermay/ECE551/ECE551-Project/motion/PID.sv
+QuestaSim vlog 2021.2_2 Compiler 2021.06 Jun 19 2021
+-- Compiling module PID
+
+Top level modules:
+	PID
 
 } {} {}} /filespace/s/sschiedermay/ECE551/ECE551-Project/comm/UART_tx.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/s/sschiedermay/ECE551/ECE551-Project/comm/UART_tx.sv
 QuestaSim vlog 2021.2_2 Compiler 2021.06 Jun 19 2021
@@ -133,11 +132,12 @@ QuestaSim vlog 2021.2_2 Compiler 2021.06 Jun 19 2021
 Top level modules:
 	UART_tx
 
-} {} {}} /filespace/s/sschiedermay/ECE551/ECE551-Project/motion/PID.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/s/sschiedermay/ECE551/ECE551-Project/motion/PID.sv
+} {} {}} /filespace/s/sschiedermay/ECE551/ECE551-Project/top/KnightPhysics.sv {1 {vlog -work work -vopt -sv -stats=none /filespace/s/sschiedermay/ECE551/ECE551-Project/top/KnightPhysics.sv
 QuestaSim vlog 2021.2_2 Compiler 2021.06 Jun 19 2021
--- Compiling module PID
+-- Compiling module KnightPhysics
+-- Compiling module inverse_PWM11e
 
 Top level modules:
-	PID
+	KnightPhysics
 
 } {} {}}

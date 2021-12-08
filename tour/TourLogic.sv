@@ -156,7 +156,7 @@ case(state)
     nxt_state = POSS;
   end
   POSS: begin
-    calc_possible(x,y,poss_moves[move_num]);
+    // calc_possible(x,y,poss_moves[move_num]);
     nxt_try = 8'h01;
     nxt_state = MOVE;
   end
