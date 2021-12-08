@@ -1,2 +1,30 @@
-Error: Current design is not defined. (UID-4)
-0
+ 
+****************************************
+Report : area
+Design : KnightsTour
+Version: S-2021.06
+Date   : Wed Dec  8 11:10:11 2021
+****************************************
+
+Library(s) Used:
+
+    saed32lvt_tt0p85v25c (File: /cae/apps/data/saed32_edk-2018/lib/stdcell_lvt/db_nldm/saed32lvt_tt0p85v25c.db)
+
+Number of ports:                           19
+Number of nets:                          2624
+Number of cells:                         2231
+Number of combinational cells:           1797
+Number of sequential cells:               412
+Number of macros/black boxes:               0
+Number of buf/inv:                        276
+Number of references:                      66
+
+Combinational area:               4914.636660
+Buf/Inv area:                      476.774150
+Noncombinational area:            2892.412912
+Macro/Black Box area:                0.000000
+Net Interconnect area:            1596.897184
+
+Total cell area:                  7807.049572
+Total area:                       9403.946756
+1
