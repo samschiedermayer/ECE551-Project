@@ -15,11 +15,7 @@ read_file -format sverilog { ./../top/KnightsTour.sv\
 		./../tour/charge.sv\
 		./../comm/UART.sv\
 	}
-#                ../motion/MtrDrv.sv
-		
 
-#		 ./tour/charge.sv
-#                ./comm/UART.sv\
 # Set Current Design to top level
 set current_design KnightsTour
 
@@ -59,11 +55,13 @@ ungroup -all -flatten
 compile -map_effort medium
 
 # generate timing and area reports
-report_timing -delay max > max_delay.rpt
-report_timing -delay min > min_delay.rpt
+report_timing -delay max > max_delay.txt
+report_timing -delay min > min_delay.txt
 report_area > KnightsTour_area.txt
 
 # write out resulting synthesized netlist
 write -format verilog KnightsTour -output KnightsTour.vg
 
-write_sdc KnightsTour.sdc
+write_sdc KnightsTour.txt
+
+exit
