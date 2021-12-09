@@ -4,7 +4,7 @@ module TourCmd(clk,rst_n,start_tour,move,mv_indx,
 
   input clk,rst_n;			// 50MHz clock and asynch active low reset
   input start_tour;			// from done signal from TourLogic
-  input [7:0] move;			// encoded 1-hot move to perform
+  input [2:0] move;     // 3-bit move to perform
   output reg [4:0] mv_indx;	// "address" to access next move
   input [15:0] cmd_UART;	// cmd from UART_wrapper
   input cmd_rdy_UART;		// cmd_rdy from UART_wrapper
@@ -78,10 +78,10 @@ always_comb begin
          end
       end
       VERT_FORM: begin
-         cmd_tour = (move & 8'h03) ? 16'h2002: //0,1 //01,02
-               (move & 8'h84) ? 16'h2001: //2,7 //04,80
-               (move & 8'h48) ? 16'h27F1: //3,6 //08,40
-               16'h2302; //4,5 //10,20
+         cmd_tour = ((move==0)|(move==1)) ? 16'h2002: //0,1 //01,02
+                    ((move==2)|(move==7)) ? 16'h2001: //2,7 //04,80
+                    ((move==3)|(move==6)) ? 16'h27F1: //3,6 //08,40
+                                            16'h2302; //4,5 //10,20
 
          cmd_rdy_tour = 1;
          if(clr_cmd_rdy)
@@ -93,10 +93,14 @@ always_comb begin
          end
       end
       HORI_FORM: begin
-         cmd_tour = (move & 8'h22) ? 16'h3BF1: //1,5 //02,20
-               (move & 8'hC0) ? 16'h3BF2: //6,7 //40,80
-               (move & 8'h11) ? 16'h33F1: //0,4 //01,10
-               16'h33F2; //2,3 //04,08
+         //cmd_tour = (move & 8'h22) ? 16'h3BF1: //1,5 //02,20
+         //      (move & 8'hC0) ? 16'h3BF2: //6,7 //40,80
+         //      (move & 8'h11) ? 16'h33F1: //0,4 //01,10
+         //      16'h33F2; //2,3 //04,08
+         cmd_tour = ((move==1)|(move==5)) ? 16'h3BF1: //1,5 //02,20
+                    ((move==6)|(move==7)) ? 16'h3BF2: //6,7 //40,80
+                    ((move==0)|(move==4)) ? 16'h33F1: //0,4 //01,10
+                                            16'h33F2; //2,3 //04,08
          cmd_rdy_tour = 1;
          if(clr_cmd_rdy) begin
             nxt_state = HORI_WAIT;
@@ -119,3 +123,4 @@ always_comb begin
 end
   
 endmodule
+

@@ -1,23 +1,23 @@
 # Read in the verilog files first
-read_file -format sverilog { ./../top/KnightsTour.sv\
-			    ./../physical/reset_synch.sv\
-                ./../intf/inert_intf.sv\
+read_file -format sverilog {\
+		./../top/KnightsTour.sv\
+		./../physical/reset_synch.sv\
+		./../intf/inert_intf.sv\
 		./../intf/inertial_integrator.sv\
 		./../intf/IR_intf.sv\
-                ./../comm/SPI_mnrch.sv\
-                ./../tour/TourLogic.sv\
-                ./../tour/TourCmd.sv\
-                ./../top/cmd_proc.sv\
-                ./../comm/UART_wrapper.sv\
-                ./../comm/UART_tx.sv\
-                ./../comm/UART_rx.sv\
-                ./../motion/PID.sv\
-                ./../motion/PWM11.sv\
+		./../comm/SPI_mnrch.sv\
+		./../tour/TourLogic.sv\
+		./../tour/TourCmd.sv\
+		./../top/cmd_proc.sv\
+		./../comm/UART_wrapper.sv\
+		./../comm/UART_tx.sv\
+		./../comm/UART_rx.sv\
+		./../motion/PID.sv\
+		./../motion/PWM11.sv\
 		./../motion/MtrDrv.sv\
 		./../tour/charge.sv\
 		./../comm/UART.sv\
-	}
-
+}
 # Set Current Design to top level
 set current_design KnightsTour
 
@@ -43,9 +43,6 @@ set_wire_load_model -name 16000 -library saed32lvt_tt0p85v25c
 
 # Set clock uncertainty
 set_clock_uncertainty 0.15 clk
-
-# Write out resulting synthesized netlist
-write -format verilog UART -output KnightsTour.vg
 
 # Compile the design
 compile -map_effort medium
@@ -74,3 +71,4 @@ write -format verilog KnightsTour -output KnightsTour.vg
 write_sdc KnightsTour_sdc.txt
 
 exit
+

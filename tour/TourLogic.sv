@@ -2,124 +2,162 @@ module TourLogic(
   input clk, rst_n, go,
   input [2:0] x_start, y_start,
   input [4:0] indx,
-  output done,
-  output [7:0] move
+  output reg done,
+  output reg [2:0] move
 );
-genvar i;
-genvar j;
 
-task x_offset(
-  input [7:0] movenum,
-  output signed [2:0] offset
-);
-case (movenum)
-  8'h01:
-    offset = -1;
-  8'h02:
-    offset =  1;
-  8'h04:
-    offset = -2;
-  8'h08:
-    offset = -2;
-  8'h10:
-    offset = -1;
-  8'h20:
-    offset =  1;
-  8'h40:
-    offset =  2;
-  8'h80:
-    offset =  2;
-endcase
 
-endtask
+// counter for move number
+logic [1:0] cnt_op;
+logic [4:0] nxt_cnt;
+reg [4:0] cnt;
 
-task y_offset(
-  input [7:0] movenum,
-  output signed [2:0] offset
-);
-case (movenum)
-  8'h01:
-    offset =  2;
-  8'h02:
-    offset =  2;
-  8'h04:
-    offset =  1;
-  8'h08:
-    offset = -1;
-  8'h10:
-    offset = -2;
-  8'h20:
-    offset = -2;
-  8'h40:
-    offset =  1;
-  8'h80:
-    offset = -1;
-endcase
+always_comb begin
+  case (cnt_op)
+    2'b00: nxt_cnt = cnt;
+    2'b01: nxt_cnt = 5'h00;
+    2'b10: nxt_cnt = cnt + 1;
+    2'b11: nxt_cnt = cnt - 1;
+  endcase
+end
 
-endtask
+always_ff @(posedge clk)
+  cnt <= nxt_cnt;
 
-logic rst_move_num;
-logic [4:0] move_num, nxt_move_num;
+
+// board registers
+logic board_set;
+logic board_en[4:0][4:0];
+reg board[4:0][4:0]; 
+always_ff @(posedge clk)
+  for (int i = 0; i < 5; i++)
+    for (int j = 0; j < 5; j++)
+      board[j][i] <= board_en[j][i] ? board_set : board[j][i];
+
+
+// moves registers
+logic move_op;
+logic [2:0] nxt_move;
+reg [2:0] moves [23:0];
+logic move_en [23:0];
+
+assign nxt_move = move_op ? (moves[cnt] + 1) : 3'h0;
+
+always_ff @(posedge clk)
+  for (int i = 0; i < 24; i++)
+    moves[i] <= move_en[i] ? nxt_move : moves[i];
+
+
+// x and y positions
+logic [1:0] xy_op;
+logic [3:0] nxt_x, nxt_y;
+logic signed [2:0] dx, dy;
+logic [3:0] x_plus, y_plus;
+reg signed [3:0] x, y;
+
+assign x_plus = x + dx;
+assign y_plus = y + dy;
+
+always_comb begin
+  case (moves[cnt])
+    3'b000: begin
+      dx = 3'b111;
+      dy = 3'b010;
+    end
+    3'b001: begin
+      dx = 3'b001;
+      dy = 3'b010;
+    end
+    3'b010: begin
+      dx = 3'b110;
+      dy = 3'b001;
+    end
+    3'b011: begin
+      dx = 3'b110;
+      dy = 3'b111;
+    end
+    3'b100: begin
+      dx = 3'b111;
+      dy = 3'b110;
+    end
+    3'b101: begin
+      dx = 3'b001;
+      dy = 3'b110;
+    end
+    3'b110: begin
+      dx = 3'b010;
+      dy = 3'b111;
+    end
+    3'b111: begin
+      dx = 3'b010;
+      dy = 3'b001;
+    end
+  endcase
+
+  case (xy_op)
+    2'b00: begin
+      nxt_x = x;
+      nxt_y = y;
+    end
+    2'b01: begin
+      nxt_x = x_start;
+      nxt_y = y_start;
+    end
+    2'b10: begin
+      nxt_x = x_plus;
+      nxt_y = y_plus;
+    end
+    2'b11: begin
+      nxt_x = x - dx;
+      nxt_y = y - dy;
+    end
+  endcase
+end
+
+always_ff @(posedge clk) begin
+  x <= nxt_x;
+  y <= nxt_y;
+end
+
+
+// flop for done signal and logic for move output
+logic clr_done, set_done;
+
+assign move = moves[indx];
+
 always_ff @(posedge clk, negedge rst_n)
   if (!rst_n)
-    move_num <= 5'h00;
+    done <= 1'b0;
   else
-    move_num <= (rst_move_num) ? 5'h00 : nxt_move_num;
+    done <= (~clr_done) & (set_done | done);
 
-logic rst_moves;
 
-logic [7:0] moves [24:0];
-logic [7:0] nxt_moves [24:0];
-generate for (i = 0; i < 25; i = i + 1) begin
-  always_ff @(posedge clk, negedge rst_n)
-    if (!rst_n)
-      moves[i] <= 8'h00;
-    else
-      moves[i] <= (rst_moves) ? 8'h00 : nxt_moves[i];
-end
-endgenerate
+// signals for state machine
+logic in_bounds;
+logic not_occupied;
+logic finished;
+logic last;
+logic backtrack;
+logic valid;
 
-logic [7:0] poss_moves [24:0];
-logic [7:0] nxt_poss_moves [24:0];
-generate for (i = 0; i < 25; i = i + 1) begin
-  always_ff @(posedge clk, negedge rst_n)
-    if (!rst_n)
-      poss_moves[i] <= 8'h00;
-    else
-      poss_moves[i] <= (rst_moves) ? 8'h00 : poss_moves[i];
-end
-endgenerate
+assign in_bounds = (x_plus<5)&(~x_plus[3])&(y_plus<5)&(~y_plus[3]);
 
-logic rst_board;
-logic board [4:0][4:0];
-logic nxt_board [4:0][4:0];
-generate for (i = 0; i < 5; i = i + 1) begin
-  for (j = 0; j < 5; j = j + 1) begin
-    always_ff @(posedge clk, negedge rst_n)
-      if (!rst_n)
-        board[i][j] <= 1'b0;
-      else
-        board[i][j] <= (rst_board) ? 1'b0 : nxt_board[i][j];
-  end
-end
-endgenerate
+assign not_occupied = (in_bounds) ? ~(board[y_plus][x_plus]) : 1'b1;
 
-logic increment;
-logic signed [2:0] dx, dy;
-logic [2:0] x, nxt_x, y, nxt_y;
-always_ff @(posedge clk) begin
-  x <= (increment) ? nxt_x + dx : nxt_x;
-  y <= (increment) ? nxt_y + dy : nxt_y;
-end
+assign finished = (cnt == 5'h18);
 
-logic inc_try;
-logic [7:0] try, nxt_try;
-always_ff @(posedge clk)
-  try <= (inc_try) ? {nxt_try[6:0],1'b0} : nxt_try;
+assign last = &(moves[cnt]);
 
-typedef enum logic [2:0] {IDLE, INIT, POSS, MOVE, BACK} tourlogic_state_t;
+assign backtrack = (last)&((~in_bounds)|(~not_occupied));
 
-tourlogic_state_t state, nxt_state;
+assign valid = in_bounds&not_occupied;
+
+
+// state machine
+typedef enum logic [2:0] { IDLE, INIT, SOLV, BAK1, BAK2, BAK3, VALD, FINI } tl_state_t;
+
+tl_state_t state, nxt_state;
+
 always_ff @(posedge clk, negedge rst_n)
   if (!rst_n)
     state <= IDLE;
@@ -127,45 +165,112 @@ always_ff @(posedge clk, negedge rst_n)
     state <= nxt_state;
 
 always_comb begin
-nxt_state = state;
-nxt_board = board;
-nxt_moves = moves;
-nxt_poss_moves = poss_moves;
-nxt_move_num = move_num;
-nxt_x = x;
-nxt_y = y;
-nxt_try = try;
+  nxt_state = state;
 
-rst_board = 0;
-rst_moves = 0;
-rst_move_num = 0;
-increment = 0;
-inc_try = 0;
+  cnt_op    = 2'b00;
+  xy_op     = 2'b00;
+  move_op   = 1'b0;
+  board_set = 1'b0;
 
-case(state)
-  IDLE: if (go) begin
-    rst_board = 1;
-    rst_moves = 1;
-    rst_move_num = 1;
-    nxt_state = INIT;
-  end
-  INIT: begin
-    nxt_board[x_start][y_start] = 1;
-    nxt_x = x_start;
-    nxt_y = y_start;
-    nxt_state = POSS;
-  end
-  POSS: begin
-    // calc_possible(x,y,poss_moves[move_num]);
-    nxt_try = 8'h01;
-    nxt_state = MOVE;
-  end
-  MOVE:;
-  BACK:;
-  default:;
-endcase
+  clr_done = 1'b0;
+  set_done = 1'b0;
 
+  for (int i = 0; i < 24; i++)
+    move_en[i] = 1'b0;
+
+  for (int i = 0; i < 5; i++)
+    for (int j = 0; j < 5; j++)
+      board_en[j][i] = 1'b0;
+
+  case (state)
+    IDLE: if (go) begin
+      cnt_op = 2'b01;
+      xy_op  = 2'b01;
+
+      for (int i = 0; i < 24; i++)
+        move_en[i] = 1'b1;
+
+      for (int i = 0; i < 5; i++)
+        for (int j = 0; j < 5; j++)
+          board_en[j][i] = 1'b1;
+
+      nxt_state = INIT;
+    end
+
+    INIT: begin
+      board_en[y][x] = 1'b1;
+      board_set = 1'b1;
+
+      nxt_state = SOLV;
+    end
+
+    SOLV: if (finished) begin // solution has been found
+      set_done = 1'b1;
+
+      nxt_state = FINI;
+    end else if (backtrack) begin // move 7 invalid, so need to backtrack
+      board_en[y][x] = 1'b1;
+      move_en[cnt]   = 1'b1;
+      cnt_op         = 2'b11;
+
+      nxt_state = BAK1;
+    end else if (valid) begin // valid move found, continue to next move
+      cnt_op = 2'b10;
+      xy_op  = 2'b10;
+
+      nxt_state = VALD;
+    end else begin // try next move
+      move_op = 1'b1;
+      move_en[cnt] = 1'b1;
+    end
+
+    BAK1: begin
+      xy_op = 3;
+
+      nxt_state = BAK2;
+    end
+
+    BAK2: if (last) begin
+      board_en[y][x] = 1'b1;
+      move_en[cnt]   = 1'b1;
+      cnt_op         = 2'b11;
+
+      nxt_state = BAK3;
+    end else begin
+      move_en[cnt] = 1'b1;
+      move_op      = 1'b1;
+
+      nxt_state = SOLV;
+    end
+
+    BAK3: begin
+      xy_op = 3;
+
+      nxt_state = BAK2;
+    end
+
+    VALD: begin
+      board_en[y][x] = 1'b1;
+      board_set      = 1'b1;
+
+      nxt_state = SOLV;
+    end
+
+    default: begin //FINI state
+      clr_done = 1'b1;
+
+      nxt_state = IDLE;
+    end
+
+  endcase
 end
 
 endmodule
+
+
+
+
+
+
+
 
