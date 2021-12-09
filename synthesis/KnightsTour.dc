@@ -39,7 +39,7 @@ set_load 0.1 [all_outputs]
 
 # Set wireload and transition time
 set_max_transition 0.15 [current_design]
-set_wire_load_model -name 16000 -library saed32rvt_tt0p85v25c
+set_wire_load_model -name 16000 -library saed32lvt_tt0p85v25c
 
 # Set clock uncertainty
 set_clock_uncertainty 0.15 clk
