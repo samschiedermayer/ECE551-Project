@@ -4,3 +4,4 @@ synthesis/*.svf
 synthesis/*.mr
 synthesis/*.pvl
 *.swp
+*.cr.mti
