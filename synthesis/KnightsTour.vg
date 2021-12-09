@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////
 // Created by: Synopsys DC Expert(TM) in wire load mode
 // Version   : S-2021.06
-// Date      : Thu Dec  9 12:55:54 2021
+// Date      : Thu Dec  9 16:30:01 2021
 /////////////////////////////////////////////////////////////
 
 
@@ -3698,7 +3698,7 @@ module KnightsTour ( clk, RST_n, SS_n, SCLK, MOSI, MISO, INT, lftPWM1, lftPWM2,
   DFFARX1_LVT \iIR/smpl_tmr_reg[6]  ( .D(\iIR/N11 ), .CLK(clk), .RSTB(n3638), 
         .Q(\iIR/smpl_tmr [6]) );
   DFFARX1_LVT \iINERT/timer_reg[6]  ( .D(\iINERT/N18 ), .CLK(clk), .RSTB(n3650), .Q(\iINERT/timer [6]) );
-  DFFARX1_LVT \iIR/rghtIR_FF1_reg  ( .D(\iIR/n40 ), .CLK(clk), .RSTB(n3641), 
+  DFFARX1_LVT \iIR/rghtIR_FF1_reg  ( .D(\iIR/n40 ), .CLK(clk), .RSTB(n3647), 
         .Q(n3177) );
   DFFARX1_LVT \iIR/smpl_tmr_reg[7]  ( .D(\iIR/N12 ), .CLK(clk), .RSTB(n3649), 
         .Q(\iIR/smpl_tmr [7]) );
@@ -3706,7 +3706,7 @@ module KnightsTour ( clk, RST_n, SS_n, SCLK, MOSI, MISO, INT, lftPWM1, lftPWM2,
   DFFARX1_LVT \iINERT/iINT/yaw_off_reg[2]  ( .D(\iINERT/iINT/n57 ), .CLK(clk), 
         .RSTB(n3644), .Q(n3263) );
   DFFARX1_LVT \iINERT/iINT/yaw_off_reg[0]  ( .D(\iINERT/iINT/n55 ), .CLK(clk), 
-        .RSTB(n3647), .Q(n472) );
+        .RSTB(n3641), .Q(n472) );
   DFFARX1_LVT \iINERT/iINT/yaw_off_reg[1]  ( .D(\iINERT/iINT/n56 ), .CLK(clk), 
         .RSTB(n3651), .Q(n3264) );
   DFFARX1_LVT \iIR/blanking_timer_reg[6]  ( .D(\iIR/n47 ), .CLK(clk), .RSTB(
