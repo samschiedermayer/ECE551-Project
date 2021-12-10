@@ -13,9 +13,13 @@ PID iDut(.clk(clk),.rst_n(rst_n),.moving(moving),.err_vld(err_vld),
 reg [24:0] stim[0:1999];
 reg [21:0] resp[0:1999];
 
+logic checking_val;
+
 logic tb_err;
 initial begin
   tb_err = 0;
+
+  checking_val = 0;
 
   // initialize values
   clk = 0;
@@ -31,7 +35,6 @@ initial begin
 
   // loop through the vectors and check input vs output
   for (int i = 0; i < 2000; i++) begin
-    @(negedge clk);
     rst_n   = stim[i][24];
     moving  = stim[i][23];
     err_vld = stim[i][22];
@@ -40,20 +43,26 @@ initial begin
 
     exp_lft  = resp[i][21:11];
     exp_rght = resp[i][10: 0];
-    @(posedge clk);
-    #4;
+    repeat (3) @(negedge clk);
+    checking_val = 1;
+    #1;
     if (lft_spd !== exp_lft) begin
-      $display("Error, lft_spd does not match for input %i.  Expected: %x, Actual: %x",i,exp_lft,lft_spd);
+      $display("Error, lft_spd does not match for input %d.  Expected: %0h, Actual: %0h",i,exp_lft,lft_spd);
       tb_err = 1;
+      $display("Test %d",i);
+      // $stop();
     end
     if (rght_spd !== exp_rght) begin
-      $display("Error, rght_spd does not match for input %i. Expected: %x, Actual: %x",i,exp_rght,rght_spd);
+      $display("Error, rght_spd does not match for input %d. Expected: %0h, Actual: %0h",i,exp_rght,rght_spd);
       tb_err = 1;
+      // $stop();
     end
+    #1;
+    checking_val = 0;
   end
 
   if (0 === tb_err)
-    $display("Yahoo! Tests passed :)");
+    $display("Yahoo! All tests passed :)");
   $stop();
 end
 

@@ -37,66 +37,52 @@ assign D_diff_sat =
     : (!D_diff[9] && |D_diff[8:6])   ? 7'h3F //positive saturate
     :  D_diff[6:0]; //no need to saturate
 
-always_ff @(posedge clk, negedge rst_n)
-  if (!rst_n)
-    D_term <= 13'h0000;
-  else
-    D_term <= D_diff_sat * $signed(D_COEFF);
+assign D_term = D_diff_sat * $signed(D_COEFF);
 
 // I term calculation
 logic [14:0] nxt_integrator, cur_integrator, sum;
 logic overflow;
 always_ff @(posedge clk, negedge rst_n)
-    if (!rst_n)
-        cur_integrator <= 15'h0000;
-    else
-        cur_integrator <= nxt_integrator;
+  if(!rst_n)
+	cur_integrator <= 15'h0000;
+  else
+  	cur_integrator <= nxt_integrator;
 
 assign sum = cur_integrator[14:0] + {{5{err_sat[9]}},err_sat[9:0]};
 assign overflow = (cur_integrator[14] & err_sat[9] & ~sum[14])
                 | (~cur_integrator[14] & ~err_sat[9] & sum[14]);
 assign nxt_integrator = (moving) ? 
-            (err_vld & ~overflow) ? sum : cur_integrator
+            ((err_vld & ~overflow) ? sum : cur_integrator)
             : 15'h0000;
 
-always_ff @(posedge clk, negedge rst_n)
-  if (!rst_n)
-    I_term <= 9'h000;
-  else
-    I_term <= cur_integrator[14:6];
+assign I_term = cur_integrator[14:6];
 
 // P TERM STUFF
 localparam [4:0] P_COEFF = 5'h8;
-
-always_ff @(posedge clk, negedge rst_n)
-  if (!rst_n)
-    P_term <= 14'h0000;
-  else
-    P_term <= err_sat * $signed(P_COEFF[4:0]);
-
-
-// sign/zero extend inputs where necessary
-assign I_term_sext = {{5{I_term[8] }},I_term};
-assign D_term_sext = {{1{D_term[12]}},D_term};
-assign frwrd_zext  = {1'b0,frwrd};
 
 // compute sums
 logic [13:0] PID_sum;
 logic [10:0] left_sum, right_sum;
 
-// pipeline reg
-always_ff @(posedge clk, negedge rst_n)
-  if (!rst_n)
-    PID_sum <= 14'h0000;
-  else
-    PID_sum <= I_term_sext + D_term_sext + P_term;
+// pipeline reg 1
+always_ff @(posedge clk) begin
+  frwrd_zext <= {1'b0,frwrd};
+  P_term = err_sat * $signed(P_COEFF[4:0]);
+  I_term_sext = {{5{I_term[8] }},I_term};
+  D_term_sext = {{1{D_term[12]}},D_term};
+end
 
-assign left_sum  = (moving) ? (frwrd + PID_sum[13:3]) : 11'h000;
-assign right_sum = (moving) ? (frwrd - PID_sum[13:3]) : 11'h000;
+assign PID_sum = I_term_sext + D_term_sext + P_term;
+
+// Pipeline reg 2
+always_ff @(posedge clk) begin
+  left_sum <= (moving) ? (frwrd_zext + PID_sum[13:3]) : 11'h000;
+  right_sum <= (moving) ? (frwrd_zext - PID_sum[13:3]) : 11'h000;
+end
 
 // saturate outputs
-assign lft_spd  = (~PID_sum[13] & left_sum[10]) ? 11'h3FF : left_sum;
-assign rght_spd = (PID_sum[13] & right_sum[10]) ? 11'h3FF : right_sum;
+assign lft_spd  = (~PID_sum[13] &  left_sum[10]) ? 11'h3FF : left_sum;
+assign rght_spd = ( PID_sum[13] & right_sum[10]) ? 11'h3FF : right_sum;
 
 endmodule
 
