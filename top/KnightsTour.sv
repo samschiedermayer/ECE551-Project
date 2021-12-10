@@ -14,14 +14,14 @@ module KnightsTour(
   input rghtIR_n						// goes low if right IR encounters a rail
 );
  
-  localparam FAST_SIM = 0;				// used to speed up simulation
+  localparam FAST_SIM = 1;				// used to speed up simulation
 
   ////////////////////////
   // Internals signals //
   //////////////////////
   wire rst_n;							// global synchronized reset
   wire strt_cal;						// initiate gyro heading calibration
-  wire cal_done;						// done with gyro heading calibration
+  logic cal_done;						// done with gyro heading calibration
   wire signed [10:0] lft_spd, rght_spd;	// signed motor controls
   wire signed [11:0] error;
   wire signed [11:0] heading;
