@@ -17,9 +17,8 @@ module TourCmd(clk,rst_n,start_tour,move,mv_indx,
 ///////////////////////////////////////////////////////////////
 // Signal Declaration                                       //
 /////////////////////////////////////////////////////////////
-logic cmd_rdy_tour, clr_cntr, increment, sel, fanfare;
-logic [4:0] mv_indx_cntr;
-logic [15:0] cmd_tour;
+logic cmd_rdy_tour, clr_cntr, increment, sel;
+logic [15:0] cmd_tour, nxt_cmd_tour;
 
 ///////////////////////////////////////////////////////////////
 // Muxes                                                    //
@@ -32,15 +31,25 @@ assign cmd_rdy = sel ? cmd_rdy_tour: cmd_rdy_UART;
 /////////////////////////////////////////////////////////////
 always_ff @(posedge clk) begin
     if(clr_cntr)
-        mv_indx_cntr <= 5'b00000;
+        mv_indx <= 5'b00000;
     else if(increment)
-        mv_indx_cntr <= mv_indx_cntr + 1'b1;
+        mv_indx <= mv_indx + 1'b1;
 end
 
 ///////////////////////////////////////////////////////////////
 // resp logic                                               //
 /////////////////////////////////////////////////////////////
-assign resp = sel ? ((mv_indx_cntr == 5'd23) ? 8'hA5: 8'h5A): 8'hA5; 
+assign resp = sel ? ((mv_indx == 5'd23) ? 8'hA5: 8'h5A): 8'hA5; 
+
+///////////////////////////////////////////////////////////////
+// cmd_tour Flipity Flopity                            //
+/////////////////////////////////////////////////////////////
+always_ff@(posedge clk, negedge rst_n)
+    if(!rst_n)
+        cmd_tour <= 16'h0000;
+    else
+        cmd_tour <= nxt_cmd_tour;
+
 ///////////////////////////////////////////////////////////////
 // State Machine State Declarations                         //
 /////////////////////////////////////////////////////////////
@@ -67,7 +76,6 @@ always_comb begin
    increment = 0;
    cmd_rdy_tour = 0;
    nxt_state = state;
-   cmd_tour = 16'h0000;
 
    case(state)
       IDLE: begin
@@ -78,10 +86,10 @@ always_comb begin
          end
       end
       VERT_FORM: begin
-         cmd_tour = ((move==0)|(move==1)) ? 16'h2002: //0,1 //01,02
-                    ((move==2)|(move==7)) ? 16'h2001: //2,7 //04,80
-                    ((move==3)|(move==6)) ? 16'h27F1: //3,6 //08,40
-                                            16'h2302; //4,5 //10,20
+         nxt_cmd_tour = ((move==0)|(move==1)) ? 16'h2002: //0,1
+                    ((move==2)|(move==7)) ? 16'h2001: //2,7
+                    ((move==3)|(move==6)) ? 16'h27F1: //3,6
+                                            16'h2302; //4,5
 
          cmd_rdy_tour = 1;
          if(clr_cmd_rdy)
@@ -93,25 +101,21 @@ always_comb begin
          end
       end
       HORI_FORM: begin
-         //cmd_tour = (move & 8'h22) ? 16'h3BF1: //1,5 //02,20
-         //      (move & 8'hC0) ? 16'h3BF2: //6,7 //40,80
-         //      (move & 8'h11) ? 16'h33F1: //0,4 //01,10
-         //      16'h33F2; //2,3 //04,08
-         cmd_tour = ((move==1)|(move==5)) ? 16'h3BF1: //1,5 //02,20
-                    ((move==6)|(move==7)) ? 16'h3BF2: //6,7 //40,80
-                    ((move==0)|(move==4)) ? 16'h33F1: //0,4 //01,10
-                                            16'h33F2; //2,3 //04,08
+         nxt_cmd_tour = ((move==1)|(move==5)) ? 16'h3BF1: //1,5
+                    ((move==6)|(move==7)) ? 16'h3BF2: //6,7
+                    ((move==0)|(move==4)) ? 16'h33F1: //0,4
+                                            16'h33F2; //2,3
          cmd_rdy_tour = 1;
          if(clr_cmd_rdy) begin
             nxt_state = HORI_WAIT;
          end
       end
       HORI_WAIT: begin
-         if(send_resp && mv_indx_cntr < 23)begin
+         if(send_resp && mv_indx < 23)begin
             increment = 1;
             nxt_state = VERT_FORM;
          end
-         else if (send_resp && mv_indx_cntr == 23) begin
+         else if (send_resp && mv_indx == 23) begin
             increment = 1;
             nxt_state = IDLE;
          end
