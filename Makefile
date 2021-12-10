@@ -1,24 +1,18 @@
 
-all: comm physical intf motion tour top
-	
-
-top:
-	vlog top/*.sv
- 
-comm:
+all:
 	vlog comm/*.sv
-
-physical:
-	vlog physical/*.sv
-
-intf:
+	vlog individual_tb/*.sv
 	vlog intf/*.sv
-
-motion:
 	vlog motion/*.sv
-
-tour:
+	vlog physical/*.sv
 	vlog tour/*.sv
+	vlog tb_support/*.sv
+	vlog top/*.sv
+
+test:
+	vlog tb_support/*.sv
+	vlog top/*.sv
+	vsim -c -do "run -all;exit" KnightsTour_tb
 
 synth:
 	cd synthesis && design_vision -shell dc_shell -f KnightsTour.dc

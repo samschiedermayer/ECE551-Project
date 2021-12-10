@@ -1,7 +1,7 @@
 module KnightsTour_tb();
 
-  //<< import or include tasks?>>
-  // import tb_tasks::*;
+  // import tasks
+  import tb_tasks::*;
   
   /////////////////////////////
   // Stimulus of type reg //
@@ -14,7 +14,7 @@ module KnightsTour_tb();
   // Declare any internal signals //
   /////////////////////////////////
   wire SS_n,SCLK,MOSI,MISO,INT;
-  wire lftPWM1,lftPWM2,rghtPWM1,rghtPWM2;
+  logic lftPWM1,lftPWM2,rghtPWM1,rghtPWM2;
   wire TX_RX, RX_TX;
   logic cmd_sent;
   logic resp_rdy;
@@ -35,8 +35,6 @@ module KnightsTour_tb();
   /////////////////////////////////////////////////////
   // Instantiate RemoteComm to send commands to DUT //
   ///////////////////////////////////////////////////
-  //<< This is my remoteComm.  It is possible yours has a slight variation
-  //   in port names>>
   RemoteComm iRMT(.clk(clk), .rst_n(RST_n), .RX(RX_TX), .TX(TX_RX), .cmd(cmd),
              .snd_cmd(send_cmd), .cmd_snt(cmd_sent), .resp_rdy(resp_rdy), .resp(resp));
 				   
@@ -47,14 +45,92 @@ module KnightsTour_tb();
                       .MOSI(MOSI),.INT(INT),.lftPWM1(lftPWM1),.lftPWM2(lftPWM2),
 					  .rghtPWM1(rghtPWM1),.rghtPWM2(rghtPWM2),.IR_en(IR_en),
 					  .lftIR_n(lftIR_n),.rghtIR_n(rghtIR_n),.cntrIR_n(cntrIR_n)); 
-				   
-  initial begin
+
+  // flag for whether we have encountered an error in the test	
+  logic tb_err;
+  // counter for how many cycles waiting for edges takes, for debug
+  int cycles;
+
+  // tourlogic specific tasks
+  task automatic initialize ();
+
+    clk = 0;
+    send_cmd = 0;
+    cmd = 16'h0000;
+
+    RST_n = 1'b0;
+    @(negedge clk);
+    RST_n = 1'b1;
+    @(negedge clk);
+
+    repeat (20) @(posedge clk);
+
+    // wait for NEMO setup
+    wait_for_sig(clk, iPHYS.iNEMO.NEMO_setup, 100000, 1'b1, "NEMO setup did not assert upon reset", tb_err, cycles);
+
+    // wait for each pwm to rise and fall once
+    wait_for_sig(clk, lftPWM1, 3000, 1'b1, "lftPWM1 did not rise after reset", tb_err, cycles);
+    wait_for_sig(clk, lftPWM1, 3000, 1'b0, "lftPWM1 did not fall after reset", tb_err, cycles);
+
+    wait_for_sig(clk, lftPWM2, 3000, 1'b1, "lftPWM2 did not rise after reset", tb_err, cycles);
+    wait_for_sig(clk, lftPWM2, 3000, 1'b0, "lftPWM2 did not fall after reset", tb_err, cycles);
+
+    wait_for_sig(clk, rghtPWM1, 3000, 1'b1, "rghtPWM1 did not rise after reset", tb_err, cycles);
+    wait_for_sig(clk, rghtPWM1, 3000, 1'b0, "rghtPWM1 did not fall after reset", tb_err, cycles);
+
+    wait_for_sig(clk, rghtPWM2, 3000, 1'b1, "rghtPWM2 did not rise after reset", tb_err, cycles);
+    wait_for_sig(clk, rghtPWM2, 3000, 1'b0, "rghtPWM2 did not fall after reset", tb_err, cycles);
+    
+  endtask : initialize
+
+  task automatic checkPositiveAck();
+
+    wait_for_sig(clk, resp_rdy, 250000, 1'b1, "resp_rdy was not asserted after sending command", tb_err, cycles);
+
+  endtask : checkPositiveAck
   
-  	$display("Our code runs!");
-	$stop();
+  task automatic sendCommand(input logic [15:0] cmd_to_send);
+
+    @(negedge clk);
+    cmd = cmd_to_send;
+    send_cmd = 1;
+    @(negedge clk);
+
+    // wait for cal_done to be asserted
+    wait_for_sig(clk, iDUT.cal_done, 200000, 1'b1, "resp_rdy was not asserted after sending command", tb_err, cycles);
+
+    // wait for acknowledgement to be received
+    checkPositiveAck();
+
+  endtask : sendCommand
+  
+  task automatic moveWestOneSquare ();
+    // Add code
+  endtask : moveWestOneSquare
+
+
+   
+  initial begin
+    tb_err = 0;
+
+    initialize();
+
+    // send the calibrate command to the DUT
+    sendCommand(16'h0000);
+
+    
+
+
+    if (tb_err === 0)
+      $display("Yahoo! All tests passed :)");
+  
+  	$stop();
   end
   
   always
     #5 clk = ~clk;
+
+  //always
+  //  force iPHYS.iNEMO.NEMO_setup = 1'b0;
   
 endmodule
