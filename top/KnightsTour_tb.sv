@@ -1,7 +1,7 @@
 module KnightsTour_tb();
 
   //<< import or include tasks?>>
-  import tb_tasks::*;
+  // import tb_tasks::*;
   
   /////////////////////////////
   // Stimulus of type reg //
