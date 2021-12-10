@@ -21,7 +21,7 @@ module KnightsTour(
   //////////////////////
   wire rst_n;							// global synchronized reset
   wire strt_cal;						// initiate gyro heading calibration
-  logic cal_done;						// done with gyro heading calibration
+  wire cal_done;						// done with gyro heading calibration
   wire signed [10:0] lft_spd, rght_spd;	// signed motor controls
   wire signed [11:0] error;
   wire signed [11:0] heading;
@@ -40,7 +40,7 @@ module KnightsTour(
   wire fanfare_go;
   wire start_tour;						// done from TourLogic
   wire [4:0] mv_indx;					// "address" of tour move
-  wire [2:0] move;						// 1-hot encoded Knight move
+  wire [7:0] move;						// 1-hot encoded Knight move
   wire [7:0] resp;						// either 0xA5 (done), or 0x5A (in progress)
   
   
@@ -59,10 +59,10 @@ module KnightsTour(
   ////////////////////////////////////
   // Instantiate command processor //
   //////////////////////////////////  
-  cmd_proc #(FAST_SIM) iCMD(.clk(clk),.rst_n(rst_n),.command(cmd),.command_ready(cmd_rdy),
-           .clear_command_ready(clr_cmd_rdy),.send_response(send_resp),.start_calibration(strt_cal),
-		   .calibration_done(cal_done),.heading(heading),.heading_ready(heading_rdy),.leftIR(lftIR),
-		   .centerIR(cntrIR),.rightIR(rghtIR),.error(error),.forward(frwrd),.moving(moving),
+  cmd_proc #(FAST_SIM) iCMD(.clk(clk),.rst_n(rst_n),.cmd(cmd),.cmd_rdy(cmd_rdy),
+           .clr_cmd_rdy(clr_cmd_rdy),.send_resp(send_resp),.strt_cal(strt_cal),
+		   .cal_done(cal_done),.heading(heading),.heading_rdy(heading_rdy),.lftIR(lftIR),
+		   .cntrIR(cntrIR),.rghtIR(rghtIR),.error(error),.frwrd(frwrd),.moving(moving),
 		   .tour_go(tour_go),.fanfare_go(fanfare_go));
 	
   ///////////////////////////////////////////////////
@@ -82,7 +82,7 @@ module KnightsTour(
   /////////////////////////////////////
   // Instantiate inertial interface //
   ///////////////////////////////////
-  inert_intf #(FAST_SIM) iINERT(.clk(clk),.rst_n(rst_n),.strt_cal(strt_cal),
+  inert_intf #(FAST_SIM) iNEMO(.clk(clk),.rst_n(rst_n),.strt_cal(strt_cal),
              .cal_done(cal_done),.heading(heading),.rdy(heading_rdy),.lftIR(lftIR),
 			 .rghtIR(rghtIR),.SS_n(SS_n),.SCLK(SCLK),.MOSI(MOSI),
 			 .MISO(MISO),.INT(INT),.moving(moving));
