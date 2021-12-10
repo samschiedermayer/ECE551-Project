@@ -21,7 +21,7 @@ module KnightsTour(
   //////////////////////
   wire rst_n;							// global synchronized reset
   wire strt_cal;						// initiate gyro heading calibration
-  wire cal_done;						// done with gyro heading calibration
+  logic cal_done;						// done with gyro heading calibration
   wire signed [10:0] lft_spd, rght_spd;	// signed motor controls
   wire signed [11:0] error;
   wire signed [11:0] heading;
@@ -40,7 +40,7 @@ module KnightsTour(
   wire fanfare_go;
   wire start_tour;						// done from TourLogic
   wire [4:0] mv_indx;					// "address" of tour move
-  wire [7:0] move;						// 1-hot encoded Knight move
+  wire [2:0] move;						// 1-hot encoded Knight move
   wire [7:0] resp;						// either 0xA5 (done), or 0x5A (in progress)
   
   
