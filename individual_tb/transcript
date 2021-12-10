@@ -1,0 +1,1223 @@
+# //  Questa Sim
+# //  Version 2021.2_2 linux Jun 19 2021
+# //
+# //  Copyright 1991-2021 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading project individual_tb
+# Compile of CommTB.sv was successful.
+# Compile of PID_tb.sv was successful.
+# Compile of PWM11_tb.sv was successful.
+# Compile of SPI_mnrch_tb.sv was successful.
+# Compile of TourCmd_tb.sv was successful.
+# Compile of TourCmd.sv was successful.
+# Compile of PID.sv was successful.
+# 7 compiles, 0 failed with no errors.
+vsim work.TourCmd_tb -voptargs=+acc
+# vsim work.TourCmd_tb -voptargs="+acc" 
+# Start time: 18:05:59 on Dec 09,2021
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Note: (vopt-143) Recognized 1 FSM in module "TourCmd(fast)".
+# Loading sv_std.std
+# Loading work.TourCmd_tb(fast)
+# Loading work.TourCmd(fast)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (3) does not match connection size (8) for port 'move'. The port definition is at: /filespace/m/msexton4/ece551/ECE551-Project/tour/TourCmd.sv(1).
+#    Time: 0 ns  Iteration: 0  Instance: /TourCmd_tb/iDUT File: /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv Line: 25
+run -all
+# Executing Test 1
+# stim_move: 01
+# formed_cmd1: 2002
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 1 PASSED
+# Executing Test 2
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 2 PASSED
+# Executing Test 3
+# stim_move: 04
+# formed_cmd1: 2302
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 3 PASSED
+# Executing Test 4
+# stim_move: 06
+# formed_cmd1: 27f1
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 4 PASSED
+# Executing Test 5
+# stim_move: 07
+# formed_cmd1: 2001
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 5 PASSED
+# Executing Test 6
+# stim_move: 00
+# formed_cmd1: 2002
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 6 PASSED
+# Executing Test 7
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 7 PASSED
+# Executing Test 8
+# stim_move: 04
+# formed_cmd1: 2302
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 8 PASSED
+# Executing Test 9
+# stim_move: 05
+# formed_cmd1: 2302
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 9 PASSED
+# Executing Test 10
+# stim_move: 07
+# formed_cmd1: 2001
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 10 PASSED
+# Executing Test 11
+# stim_move: 01
+# formed_cmd1: 2002
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 11 PASSED
+# Executing Test 12
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 12 PASSED
+# Executing Test 13
+# stim_move: 03
+# formed_cmd1: 27f1
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 13 PASSED
+# Executing Test 14
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 14 PASSED
+# Executing Test 15
+# stim_move: 05
+# formed_cmd1: 2302
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 15 PASSED
+# Executing Test 16
+# stim_move: 06
+# formed_cmd1: 27f1
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 16 PASSED
+# Executing Test 17
+# stim_move: 01
+# formed_cmd1: 2002
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 17 PASSED
+# Executing Test 18
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 18 PASSED
+# Executing Test 19
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 19 PASSED
+# Executing Test 20
+# stim_move: 05
+# formed_cmd1: 2302
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 20 PASSED
+# Executing Test 21
+# stim_move: 04
+# formed_cmd1: 2302
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 21 PASSED
+# Executing Test 22
+# stim_move: 07
+# formed_cmd1: 2001
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 22 PASSED
+# Executing Test 23
+# stim_move: 06
+# formed_cmd1: 27f1
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 23 PASSED
+# Executing Test 24
+# stim_move: 00
+# formed_cmd1: 2002
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 24 PASSED
+# Yahoo, all tests passed!
+# ** Note: $stop    : /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv(131)
+#    Time: 2910 ns  Iteration: 1  Instance: /TourCmd_tb
+# Break in Module TourCmd_tb at /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv line 131
+add wave -position insertpoint sim:/TourCmd_tb/iDUT/*
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Loading work.TourCmd_tb(fast)
+# Loading work.TourCmd(fast)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (3) does not match connection size (8) for port 'move'. The port definition is at: /filespace/m/msexton4/ece551/ECE551-Project/tour/TourCmd.sv(1).
+#    Time: 0 ns  Iteration: 0  Instance: /TourCmd_tb/iDUT File: /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv Line: 25
+run -all
+# Executing Test 1
+# stim_move: 01
+# formed_cmd1: 2002
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 1 PASSED
+# Executing Test 2
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 2 PASSED
+# Executing Test 3
+# stim_move: 04
+# formed_cmd1: 2302
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 3 PASSED
+# Executing Test 4
+# stim_move: 06
+# formed_cmd1: 27f1
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 4 PASSED
+# Executing Test 5
+# stim_move: 07
+# formed_cmd1: 2001
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 5 PASSED
+# Executing Test 6
+# stim_move: 00
+# formed_cmd1: 2002
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 6 PASSED
+# Executing Test 7
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 7 PASSED
+# Executing Test 8
+# stim_move: 04
+# formed_cmd1: 2302
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 8 PASSED
+# Executing Test 9
+# stim_move: 05
+# formed_cmd1: 2302
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 9 PASSED
+# Executing Test 10
+# stim_move: 07
+# formed_cmd1: 2001
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 10 PASSED
+# Executing Test 11
+# stim_move: 01
+# formed_cmd1: 2002
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 11 PASSED
+# Executing Test 12
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 12 PASSED
+# Executing Test 13
+# stim_move: 03
+# formed_cmd1: 27f1
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 13 PASSED
+# Executing Test 14
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 14 PASSED
+# Executing Test 15
+# stim_move: 05
+# formed_cmd1: 2302
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 15 PASSED
+# Executing Test 16
+# stim_move: 06
+# formed_cmd1: 27f1
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 16 PASSED
+# Executing Test 17
+# stim_move: 01
+# formed_cmd1: 2002
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 17 PASSED
+# Executing Test 18
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 18 PASSED
+# Executing Test 19
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 19 PASSED
+# Executing Test 20
+# stim_move: 05
+# formed_cmd1: 2302
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 20 PASSED
+# Executing Test 21
+# stim_move: 04
+# formed_cmd1: 2302
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 21 PASSED
+# Executing Test 22
+# stim_move: 07
+# formed_cmd1: 2001
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 22 PASSED
+# Executing Test 23
+# stim_move: 06
+# formed_cmd1: 27f1
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 23 PASSED
+# Executing Test 24
+# stim_move: 00
+# formed_cmd1: 2002
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 24 PASSED
+# Yahoo, all tests passed!
+# ** Note: $stop    : /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv(131)
+#    Time: 2910 ns  Iteration: 1  Instance: /TourCmd_tb
+# Break in Module TourCmd_tb at /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv line 131
+# Compile of CommTB.sv was successful.
+# Compile of PID_tb.sv was successful.
+# Compile of PWM11_tb.sv was successful.
+# Compile of SPI_mnrch_tb.sv was successful.
+# Compile of TourCmd_tb.sv was successful.
+# Compile of TourCmd.sv failed with 2 errors.
+# Compile of PID.sv was successful.
+# 7 compiles, 1 failed with 2 errors.
+# Compile of CommTB.sv was successful.
+# Compile of PID_tb.sv was successful.
+# Compile of PWM11_tb.sv was successful.
+# Compile of SPI_mnrch_tb.sv was successful.
+# Compile of TourCmd_tb.sv was successful.
+# Compile of TourCmd.sv failed with 2 errors.
+# Compile of PID.sv was successful.
+# 7 compiles, 1 failed with 2 errors.
+# Compile of CommTB.sv was successful.
+# Compile of PID_tb.sv was successful.
+# Compile of PWM11_tb.sv was successful.
+# Compile of SPI_mnrch_tb.sv was successful.
+# Compile of TourCmd_tb.sv was successful.
+# Compile of TourCmd.sv was successful.
+# Compile of PID.sv was successful.
+# 7 compiles, 0 failed with no errors.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Note: (vopt-143) Recognized 1 FSM in module "TourCmd(fast)".
+# Loading sv_std.std
+# Loading work.TourCmd_tb(fast)
+# Loading work.TourCmd(fast)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (3) does not match connection size (8) for port 'move'. The port definition is at: /filespace/m/msexton4/ece551/ECE551-Project/tour/TourCmd.sv(1).
+#    Time: 0 ns  Iteration: 0  Instance: /TourCmd_tb/iDUT File: /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv Line: 25
+# Warning in wave window restart: (vish-4014) No objects found matching '/TourCmd_tb/iDUT/fanfare'. 
+# Warning in wave window restart: (vish-4014) No objects found matching '/TourCmd_tb/iDUT/mx_indx'. 
+run -all
+# Executing Test 1
+# stim_move: 01
+# formed_cmd1: 2002
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 1 PASSED
+# Executing Test 2
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 2 PASSED
+# Executing Test 3
+# stim_move: 04
+# formed_cmd1: 2302
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 3 PASSED
+# Executing Test 4
+# stim_move: 06
+# formed_cmd1: 27f1
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 4 PASSED
+# Executing Test 5
+# stim_move: 07
+# formed_cmd1: 2001
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 5 PASSED
+# Executing Test 6
+# stim_move: 00
+# formed_cmd1: 2002
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 6 PASSED
+# Executing Test 7
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 7 PASSED
+# Executing Test 8
+# stim_move: 04
+# formed_cmd1: 2302
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 8 PASSED
+# Executing Test 9
+# stim_move: 05
+# formed_cmd1: 2302
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 9 PASSED
+# Executing Test 10
+# stim_move: 07
+# formed_cmd1: 2001
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 10 PASSED
+# Executing Test 11
+# stim_move: 01
+# formed_cmd1: 2002
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 11 PASSED
+# Executing Test 12
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 12 PASSED
+# Executing Test 13
+# stim_move: 03
+# formed_cmd1: 27f1
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 13 PASSED
+# Executing Test 14
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 14 PASSED
+# Executing Test 15
+# stim_move: 05
+# formed_cmd1: 2302
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 15 PASSED
+# Executing Test 16
+# stim_move: 06
+# formed_cmd1: 27f1
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 16 PASSED
+# Executing Test 17
+# stim_move: 01
+# formed_cmd1: 2002
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 17 PASSED
+# Executing Test 18
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 18 PASSED
+# Executing Test 19
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 19 PASSED
+# Executing Test 20
+# stim_move: 05
+# formed_cmd1: 2302
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 20 PASSED
+# Executing Test 21
+# stim_move: 04
+# formed_cmd1: 2302
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 21 PASSED
+# Executing Test 22
+# stim_move: 07
+# formed_cmd1: 2001
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 22 PASSED
+# Executing Test 23
+# stim_move: 06
+# formed_cmd1: 27f1
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 23 PASSED
+# Executing Test 24
+# stim_move: 00
+# formed_cmd1: 2002
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 24 PASSED
+# Yahoo, all tests passed!
+# ** Note: $stop    : /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv(131)
+#    Time: 2910 ns  Iteration: 1  Instance: /TourCmd_tb
+# Break in Module TourCmd_tb at /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv line 131
+# Compile of CommTB.sv was successful.
+# Compile of PID_tb.sv was successful.
+# Compile of PWM11_tb.sv was successful.
+# Compile of SPI_mnrch_tb.sv was successful.
+# Compile of TourCmd_tb.sv was successful.
+# Compile of TourCmd.sv was successful.
+# Compile of PID.sv was successful.
+# 7 compiles, 0 failed with no errors.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.TourCmd_tb(fast)
+# Loading work.TourCmd(fast)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (3) does not match connection size (8) for port 'move'. The port definition is at: /filespace/m/msexton4/ece551/ECE551-Project/tour/TourCmd.sv(1).
+#    Time: 0 ns  Iteration: 0  Instance: /TourCmd_tb/iDUT File: /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv Line: 25
+run -all
+# Executing Test 1
+# stim_move: 01
+# formed_cmd1: 2002
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# TEST FAILED
+# ERROR: timed out waiting for signal,      100000 clock cycles
+# ** Note: $stop    : /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv(38)
+#    Time: 2000030 ns  Iteration: 1  Region: /TourCmd_tb/wait_for_sig
+# Break in NamedBeginStat timeout at /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv line 38
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Loading work.TourCmd_tb(fast)
+# Loading work.TourCmd(fast)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (3) does not match connection size (8) for port 'move'. The port definition is at: /filespace/m/msexton4/ece551/ECE551-Project/tour/TourCmd.sv(1).
+#    Time: 0 ns  Iteration: 0  Instance: /TourCmd_tb/iDUT File: /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv Line: 25
+run -all
+# Executing Test 1
+# stim_move: 01
+# formed_cmd1: 2002
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# TEST FAILED
+# ERROR: timed out waiting for signal,      100000 clock cycles
+# ** Note: $stop    : /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv(38)
+#    Time: 2000030 ns  Iteration: 1  Region: /TourCmd_tb/wait_for_sig
+# Break in NamedBeginStat timeout at /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv line 38
+# Compile of CommTB.sv was successful.
+# Compile of PID_tb.sv was successful.
+# Compile of PWM11_tb.sv was successful.
+# Compile of SPI_mnrch_tb.sv was successful.
+# Compile of TourCmd_tb.sv was successful.
+# Compile of TourCmd.sv was successful.
+# Compile of PID.sv was successful.
+# 7 compiles, 0 failed with no errors.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.TourCmd_tb(fast)
+# Loading work.TourCmd(fast)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (3) does not match connection size (8) for port 'move'. The port definition is at: /filespace/m/msexton4/ece551/ECE551-Project/tour/TourCmd.sv(1).
+#    Time: 0 ns  Iteration: 0  Instance: /TourCmd_tb/iDUT File: /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv Line: 25
+run -all
+# Executing Test 1
+# stim_move: 01
+# formed_cmd1: 2002
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 1 PASSED
+# Executing Test 2
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 2 PASSED
+# Executing Test 3
+# stim_move: 04
+# formed_cmd1: 2302
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 3 PASSED
+# Executing Test 4
+# stim_move: 06
+# formed_cmd1: 27f1
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 4 PASSED
+# Executing Test 5
+# stim_move: 07
+# formed_cmd1: 2001
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 5 PASSED
+# Executing Test 6
+# stim_move: 00
+# formed_cmd1: 2002
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 6 PASSED
+# Executing Test 7
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 7 PASSED
+# Executing Test 8
+# stim_move: 04
+# formed_cmd1: 2302
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 8 PASSED
+# Executing Test 9
+# stim_move: 05
+# formed_cmd1: 2302
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 9 PASSED
+# Executing Test 10
+# stim_move: 07
+# formed_cmd1: 2001
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 10 PASSED
+# Executing Test 11
+# stim_move: 01
+# formed_cmd1: 2002
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 11 PASSED
+# Executing Test 12
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 12 PASSED
+# Executing Test 13
+# stim_move: 03
+# formed_cmd1: 27f1
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 13 PASSED
+# Executing Test 14
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 14 PASSED
+# Executing Test 15
+# stim_move: 05
+# formed_cmd1: 2302
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 15 PASSED
+# Executing Test 16
+# stim_move: 06
+# formed_cmd1: 27f1
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 16 PASSED
+# Executing Test 17
+# stim_move: 01
+# formed_cmd1: 2002
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 17 PASSED
+# Executing Test 18
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 18 PASSED
+# Executing Test 19
+# stim_move: 02
+# formed_cmd1: 2001
+# formed_cmd2: 33f2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 19 PASSED
+# Executing Test 20
+# stim_move: 05
+# formed_cmd1: 2302
+# formed_cmd2: 3bf1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 20 PASSED
+# Executing Test 21
+# stim_move: 04
+# formed_cmd1: 2302
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 21 PASSED
+# Executing Test 22
+# stim_move: 07
+# formed_cmd1: 2001
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 22 PASSED
+# Executing Test 23
+# stim_move: 06
+# formed_cmd1: 27f1
+# formed_cmd2: 3bf2
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 23 PASSED
+# Executing Test 24
+# stim_move: 00
+# formed_cmd1: 2002
+# formed_cmd2: 33f1
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Waiting for cmd_rdy done
+# Waiting for posedge
+# Test 24 PASSED
+# Yahoo, all tests passed!
+# ** Note: $stop    : /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv(134)
+#    Time: 2910 ns  Iteration: 1  Instance: /TourCmd_tb
+# Break in Module TourCmd_tb at /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/TourCmd_tb.sv line 134
+quit -sim
+# End time: 18:14:59 on Dec 09,2021, Elapsed time: 0:09:00
+# Errors: 0, Warnings: 2
+vsim -voptargs=+acc work.PID_tb
+# vsim -voptargs="+acc" work.PID_tb 
+# Start time: 18:15:09 on Dec 09,2021
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading sv_std.std
+# Loading work.PID_tb(fast)
+# Loading work.PID(fast)
+add wave -position insertpoint sim:/PID_tb/DUT/*
+run -all
+# Executing Stimulus Testing
+# i: 00000001
+# Observed lft_spd: 281
+# Expected lft_spd: 029
+# Observed rght_spd: 281
+# Expected rght_spd: 3ff
+# Tests failed, the flu is getting to you. Don't let it win.
+# ** Note: $stop    : /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/PID_tb.sv(84)
+#    Time: 71 ns  Iteration: 0  Instance: /PID_tb
+# Break in Module PID_tb at /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/PID_tb.sv line 84
+# Compile of CommTB.sv was successful.
+# Compile of PID_tb.sv was successful.
+# Compile of PWM11_tb.sv was successful.
+# Compile of SPI_mnrch_tb.sv was successful.
+# Compile of TourCmd_tb.sv was successful.
+# Compile of TourCmd.sv was successful.
+# Compile of PID.sv was successful.
+# 7 compiles, 0 failed with no errors.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.PID_tb(fast)
+# Loading work.PID(fast)
+run -all
+# Executing Stimulus Testing
+# i: 00000001
+# Observed lft_spd: 281
+# Expected lft_spd: 029
+# Observed rght_spd: 281
+# Expected rght_spd: 3ff
+# Tests Failed!
+# ** Note: $stop    : /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/PID_tb.sv(84)
+#    Time: 71 ns  Iteration: 0  Instance: /PID_tb
+# Break in Module PID_tb at /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/PID_tb.sv line 84
+# Compile of CommTB.sv was successful.
+# Compile of PID_tb.sv was successful.
+# Compile of PWM11_tb.sv was successful.
+# Compile of SPI_mnrch_tb.sv was successful.
+# Compile of TourCmd_tb.sv was successful.
+# Compile of TourCmd.sv was successful.
+# Compile of PID.sv was successful.
+# 7 compiles, 0 failed with no errors.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.PID_tb(fast)
+# Loading work.PID(fast)
+run -all
+# Executing Stimulus Testing
+# i: 00000001
+# Observed lft_spd: 281
+# Expected lft_spd: 029
+# Observed rght_spd: 281
+# Expected rght_spd: 3ff
+# Tests Failed!
+# ** Note: $stop    : /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/PID_tb.sv(84)
+#    Time: 73 ns  Iteration: 0  Instance: /PID_tb
+# Break in Module PID_tb at /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/PID_tb.sv line 84
+restart
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
+# Loading work.PID_tb(fast)
+# Loading work.PID(fast)
+# Compile of CommTB.sv was successful.
+# Compile of PID_tb.sv was successful.
+# Compile of PWM11_tb.sv was successful.
+# Compile of SPI_mnrch_tb.sv was successful.
+# Compile of TourCmd_tb.sv was successful.
+# Compile of TourCmd.sv was successful.
+# Compile of PID.sv was successful.
+# 7 compiles, 0 failed with no errors.
+run -all
+# Executing Stimulus Testing
+# i: 00000001
+# Observed lft_spd: 281
+# Expected lft_spd: 029
+# Observed rght_spd: 281
+# Expected rght_spd: 3ff
+# Tests Failed!
+# ** Note: $stop    : /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/PID_tb.sv(84)
+#    Time: 73 ns  Iteration: 0  Instance: /PID_tb
+# Break in Module PID_tb at /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/PID_tb.sv line 84
+# Compile of CommTB.sv was successful.
+# Compile of PID_tb.sv was successful.
+# Compile of PWM11_tb.sv was successful.
+# Compile of SPI_mnrch_tb.sv was successful.
+# Compile of TourCmd_tb.sv was successful.
+# Compile of TourCmd.sv was successful.
+# Compile of PID.sv was successful.
+# 7 compiles, 0 failed with no errors.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.PID_tb(fast)
+# Loading work.PID(fast)
+run -all
+# Executing Stimulus Testing
+# i: 00000001
+# Observed lft_spd: 281
+# Expected lft_spd: 029
+# Observed rght_spd: 281
+# Expected rght_spd: 3ff
+# Tests Failed!
+# ** Note: $stop    : /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/PID_tb.sv(83)
+#    Time: 130 ns  Iteration: 1  Instance: /PID_tb
+# Break in Module PID_tb at /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/PID_tb.sv line 83
+# Compile of CommTB.sv was successful.
+# Compile of PID_tb.sv was successful.
+# Compile of PWM11_tb.sv was successful.
+# Compile of SPI_mnrch_tb.sv was successful.
+# Compile of TourCmd_tb.sv was successful.
+# Compile of TourCmd.sv was successful.
+# Compile of PID.sv was successful.
+# 7 compiles, 0 failed with no errors.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.PID_tb(fast)
+# Loading work.PID(fast)
+run -all
+# Executing Stimulus Testing
+# i: 00000001
+# Observed lft_spd: 281
+# Expected lft_spd: 029
+# Observed rght_spd: 281
+# Expected rght_spd: 3ff
+# Tests Failed!
+# ** Note: $stop    : /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/PID_tb.sv(83)
+#    Time: 120 ns  Iteration: 1  Instance: /PID_tb
+# Break in Module PID_tb at /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/PID_tb.sv line 83
+quit -sim
+# End time: 18:24:13 on Dec 09,2021, Elapsed time: 0:09:04
+# Errors: 0, Warnings: 1
+vsim -voptargs=+acc work.PID_tb
+# vsim -voptargs="+acc" work.PID_tb 
+# Start time: 18:25:22 on Dec 09,2021
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
+# Loading sv_std.std
+# Loading work.PID_tb(fast)
+# Loading work.PID(fast)
+add wave -position insertpoint sim:/PID_tb/DUT/*
+# Compile of CommTB.sv was successful.
+# Compile of PID_tb.sv was successful.
+# Compile of PWM11_tb.sv was successful.
+# Compile of SPI_mnrch_tb.sv was successful.
+# Compile of TourCmd_tb.sv was successful.
+# Compile of TourCmd.sv was successful.
+# Compile of PID.sv was successful.
+# 7 compiles, 0 failed with no errors.
+run -all
+# Executing Stimulus Testing
+# i: 00000001
+# Observed lft_spd: 281
+# Expected lft_spd: 029
+# Observed rght_spd: 281
+# Expected rght_spd: 3ff
+# Tests Failed!
+# ** Note: $stop    : /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/PID_tb.sv(83)
+#    Time: 120 ns  Iteration: 1  Instance: /PID_tb
+# Break in Module PID_tb at /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/PID_tb.sv line 83
+# Compile of CommTB.sv was successful.
+# Compile of PID_tb.sv was successful.
+# Compile of PWM11_tb.sv was successful.
+# Compile of SPI_mnrch_tb.sv was successful.
+# Compile of TourCmd_tb.sv was successful.
+# Compile of TourCmd.sv was successful.
+# Compile of PID.sv was successful.
+# 7 compiles, 0 failed with no errors.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.PID_tb(fast)
+# Loading work.PID(fast)
+run -all
+# Executing Stimulus Testing
+# i: 00000001
+# Observed lft_spd: 281
+# Expected lft_spd: 029
+# Observed rght_spd: 281
+# Expected rght_spd: 3ff
+# Tests Failed!
+# ** Note: $stop    : /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/PID_tb.sv(83)
+#    Time: 4 us  Iteration: 1  Instance: /PID_tb
+# Break in Module PID_tb at /filespace/m/msexton4/ece551/ECE551-Project/individual_tb/PID_tb.sv line 83
