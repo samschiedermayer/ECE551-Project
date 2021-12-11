@@ -1,4 +1,4 @@
-module KnightsTour_tb();
+module test_tour();
 
   // import tasks
   import tb_tasks::*;
@@ -83,13 +83,16 @@ module KnightsTour_tb();
     
   endtask : initialize
 
-  task automatic checkPositiveAck(input int timeout);
+  task automatic checkPositiveAck(input int timeout, input logic cal);
 
     wait_for_sig(clk, resp_rdy, timeout, 1'b1, "resp_rdy was not asserted after sending command", tb_err, cycles);
 
+    if (cal)
+      err_on_cond_false(resp===8'hA5,tb_err,"response was not 0xA5 after cal");
+
   endtask : checkPositiveAck
   
-  task automatic sendCommand(input logic [15:0] cmd_to_send, input logic wait_for_cal, input integer timeout);
+  task automatic sendCommand(input logic [15:0] cmd_to_send, input logic wait_for_cal, wait_for_ack, input integer timeout);
 
     @(negedge clk);
     cmd = cmd_to_send;
@@ -97,14 +100,17 @@ module KnightsTour_tb();
     @(negedge clk);
     send_cmd = 0;
 
-    wait_for_sig(clk, cmd_sent, 200000, 1'b1, "cmd_sent was not asserted after sending command", tb_err, cycles);
+    // wait for the cmd_sent signal after sending the command
+    if (wait_for_ack)
+      wait_for_sig(clk, cmd_sent, 200000, 1'b1, "cmd_sent was not asserted after sending command", tb_err, cycles);
 
     // wait for cal_done to be asserted
     if (wait_for_cal)
       wait_for_sig(clk, iDUT.cal_done, 200000, 1'b1, "cal_done was not asserted after sending command", tb_err, cycles);
 
     // wait for acknowledgement to be received
-    checkPositiveAck(timeout);
+    if (wait_for_ack)
+      checkPositiveAck(timeout,wait_for_cal);
 
   endtask : sendCommand
   
@@ -117,29 +123,40 @@ module KnightsTour_tb();
   initial begin
     tb_err = 0;
 
+    // initialize the DUT
+    $display("Initializing the DUT...");
     initialize();
+
 
     // send the calibrate command to the DUT
     $display("Sending calibrate command to DUT...");
-    sendCommand(16'h0000,1'b1,350000);
+    sendCommand(16'h0000,1'b1,1'b1,350000);
 
-    $monitor("current_heading: %x, x position: %x, y position: %x",iDUT.heading,iPHYS.xx,iPHYS.yy);
-    // send the north command to the DUT
-    $display("Sending north command");
-    sendCommand(16'h2001,1'b0,2000000);
 
-    // send the west  command to the DUT
-    $display("Sending west command");
-    sendCommand(16'h23f1,1'b0,4000000);
+    // send the command to begin the tour
+    $display("Sending tour(2,2) command to DUT...");
+    sendCommand(16'h4022,1'b0,1'b0,1000000);
 
-    // send the east  command to the DUT
-    $display("Sending east command");
-    sendCommand(16'h2bf1,1'b0,6000000);
+    wait_for_sig(clk, iDUT.tour_go, 8000000, 1'b1, "tour_go was not asserted after sending a tour command", tb_err, cycles);
+    wait_for_sig(clk, iDUT.start_tour, 10000000, 1'b1, "start_tour was not asserted after tour_go was asserted", tb_err, cycles);
 
-    // send the south command to the DUT
-    $display("Sending south command");
-    sendCommand(16'h27f1,1'b0,4000000);
+    repeat (2) @(posedge clk);
 
+    err_on_cond_false(5'h00===iDUT.mv_indx,tb_err,"move index was not 0 at the start of the tour");
+    err_on_cond_false(3'h0===iDUT.move,tb_err,"first move was not 0 at the start of the tour");
+
+
+    // TODO test the first two actual movements of the DUT here
+    // validate the first move of the tour
+    $display("Validating the first move of the tour...");
+
+
+    // validate the second move of the tour
+    $display("Validating the second move of the tour...");
+
+
+    // ENDTODO
+    // finish the test
     if (tb_err === 0)
       $display("Yahoo! All tests passed :)");
   

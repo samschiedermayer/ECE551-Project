@@ -164,7 +164,7 @@ always_comb begin
             end
         end
         RAMP_UP : begin
-            if (move_done & (cmd[15:2] == MOVE_FANFARE_COMMAND)) begin
+            if (move_done & (cmd[15:12] == MOVE_FANFARE_COMMAND)) begin
                 fanfare_go = 1'b1;
                 next_state = RAMP_DOWN;
             end else if (move_done) begin

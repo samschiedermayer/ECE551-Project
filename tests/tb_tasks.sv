@@ -24,7 +24,7 @@ package tb_tasks;
   );
     if (condition) begin
       tb_err = 1;
-      $display(err_msg);
+      $display("ERROR: %s",err_msg);
     end
   endtask : err_on_cond_true
 
@@ -35,7 +35,7 @@ package tb_tasks;
   );
     if (!condition) begin
       tb_err = 1;
-      $display(err_msg);
+      $display("ERROR: %s",err_msg);
     end
   endtask : err_on_cond_false
 
@@ -48,8 +48,8 @@ package tb_tasks;
     inout int cycles
   );
     cycles = 0;
-    fork
-      begin : timeout
+    fork : timeout
+      begin
 	      repeat (clks_to_wait) begin
           @(posedge clk);
           cycles = cycles + 1;
@@ -67,7 +67,6 @@ package tb_tasks;
       	disable timeout;
       end
     join
-    $display("cycles: %0d",cycles);
   endtask : wait_for_sig
 
   // tourlogic specific tasks

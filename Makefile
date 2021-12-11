@@ -6,13 +6,13 @@ all:
 	vlog motion/*.sv
 	vlog physical/*.sv
 	vlog tour/*.sv
-	vlog tb_support/*.sv
 	vlog top/*.sv
+	vlog tests/*.sv
 
 test:
-	vlog tb_support/*.sv
-	vlog top/*.sv
-	vsim -c -do "run -all;exit" KnightsTour_tb
+	vlog tests/*.sv
+	vsim -c -do "run -all;exit" test_base
+	vsim -c -do "run -all;exit" test_tour
 
 synth:
 	cd synthesis && design_vision -shell dc_shell -f KnightsTour.dc

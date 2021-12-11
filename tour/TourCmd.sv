@@ -44,7 +44,7 @@ assign resp = sel ? ((mv_indx == 5'd23) ? 8'hA5: 8'h5A): 8'hA5;
 ///////////////////////////////////////////////////////////////
 // cmd_tour Flipity Flopity                            //
 /////////////////////////////////////////////////////////////
-always_ff@(posedge clk, negedge rst_n)
+always_ff @(posedge clk, negedge rst_n)
     if(!rst_n)
         cmd_tour <= 16'h0000;
     else
@@ -60,7 +60,7 @@ state_t state, nxt_state;
 ///////////////////////////////////////////////////////////////
 // State Machine Flipity Flopity                            //
 /////////////////////////////////////////////////////////////
-always_ff@(posedge clk, negedge rst_n)
+always_ff @(posedge clk, negedge rst_n)
     if(!rst_n)
         state <= IDLE;
     else
@@ -89,7 +89,7 @@ always_comb begin
          nxt_cmd_tour = ((move==0)|(move==1)) ? 16'h2002: //0,1
                     ((move==2)|(move==7)) ? 16'h2001: //2,7
                     ((move==3)|(move==6)) ? 16'h27F1: //3,6
-                                            16'h2302; //4,5
+                                            16'h27F2; //4,5
 
          cmd_rdy_tour = 1;
          if(clr_cmd_rdy)
