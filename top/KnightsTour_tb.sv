@@ -83,13 +83,13 @@ module KnightsTour_tb();
     
   endtask : initialize
 
-  task automatic checkPositiveAck();
+  task automatic checkPositiveAck(input int timeout);
 
-    wait_for_sig(clk, resp_rdy, 350000, 1'b1, "resp_rdy was not asserted after sending command", tb_err, cycles);
+    wait_for_sig(clk, resp_rdy, timeout, 1'b1, "resp_rdy was not asserted after sending command", tb_err, cycles);
 
   endtask : checkPositiveAck
   
-  task automatic sendCommand(input logic [15:0] cmd_to_send, input logic cal);
+  task automatic sendCommand(input logic [15:0] cmd_to_send, input logic wait_for_cal, input integer timeout);
 
     @(negedge clk);
     cmd = cmd_to_send;
@@ -97,12 +97,14 @@ module KnightsTour_tb();
     @(negedge clk);
     send_cmd = 0;
 
+    wait_for_sig(clk, cmd_sent, 200000, 1'b1, "cmd_sent was not asserted after sending command", tb_err, cycles);
+
     // wait for cal_done to be asserted
-    if (cal)
+    if (wait_for_cal)
       wait_for_sig(clk, iDUT.cal_done, 200000, 1'b1, "cal_done was not asserted after sending command", tb_err, cycles);
 
     // wait for acknowledgement to be received
-    checkPositiveAck();
+    checkPositiveAck(timeout);
 
   endtask : sendCommand
   
@@ -118,10 +120,25 @@ module KnightsTour_tb();
     initialize();
 
     // send the calibrate command to the DUT
-    sendCommand(16'h0000,1'b1);
+    $display("Sending calibrate command to DUT...");
+    sendCommand(16'h0000,1'b1,350000);
 
-    
+    $monitor("current_heading: %x, x position: %x, y position: %x",iDUT.heading,iPHYS.xx,iPHYS.yy);
+    // send the north command to the DUT
+    $display("Sending north command");
+    sendCommand(16'h2001,1'b0,2000000);
 
+    // send the west  command to the DUT
+    $display("Sending west command");
+    sendCommand(16'h23f1,1'b0,4000000);
+
+    // send the east  command to the DUT
+    $display("Sending east command");
+    sendCommand(16'h2bf1,1'b0,6000000);
+
+    // send the south command to the DUT
+    $display("Sending south command");
+    sendCommand(16'h27f1,1'b0,4000000);
 
     if (tb_err === 0)
       $display("Yahoo! All tests passed :)");

@@ -67,6 +67,7 @@ package tb_tasks;
       	disable timeout;
       end
     join
+    $display("cycles: %0d",cycles);
   endtask : wait_for_sig
 
   // tourlogic specific tasks

@@ -158,8 +158,8 @@ always_comb begin
             end
         end
         MOVE : begin
-            if ((error < 12'h030) | (error > 12'hFD0)) begin
-                moving = 1'b1;
+            moving = 1'b1;
+            if ((error < $signed(12'h030)) & (error > $signed(12'hFD0))) begin
                 next_state = RAMP_UP;
             end
         end
