@@ -85,19 +85,21 @@ module KnightsTour_tb();
 
   task automatic checkPositiveAck();
 
-    wait_for_sig(clk, resp_rdy, 250000, 1'b1, "resp_rdy was not asserted after sending command", tb_err, cycles);
+    wait_for_sig(clk, resp_rdy, 350000, 1'b1, "resp_rdy was not asserted after sending command", tb_err, cycles);
 
   endtask : checkPositiveAck
   
-  task automatic sendCommand(input logic [15:0] cmd_to_send);
+  task automatic sendCommand(input logic [15:0] cmd_to_send, input logic cal);
 
     @(negedge clk);
     cmd = cmd_to_send;
     send_cmd = 1;
     @(negedge clk);
+    send_cmd = 0;
 
     // wait for cal_done to be asserted
-    wait_for_sig(clk, iDUT.cal_done, 200000, 1'b1, "resp_rdy was not asserted after sending command", tb_err, cycles);
+    if (cal)
+      wait_for_sig(clk, iDUT.cal_done, 200000, 1'b1, "cal_done was not asserted after sending command", tb_err, cycles);
 
     // wait for acknowledgement to be received
     checkPositiveAck();
@@ -116,7 +118,7 @@ module KnightsTour_tb();
     initialize();
 
     // send the calibrate command to the DUT
-    sendCommand(16'h0000);
+    sendCommand(16'h0000,1'b1);
 
     
 
