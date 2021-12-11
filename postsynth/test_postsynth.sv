@@ -60,8 +60,10 @@ module test_postsynth();
     cmd = 16'h0000;
 
     RST_n = 1'b0;
+    @(posedge clk);
     @(negedge clk);
     RST_n = 1'b1;
+    @(posedge clk);
     @(negedge clk);
 
     repeat (20) @(posedge clk);
@@ -104,10 +106,6 @@ module test_postsynth();
     // wait for the cmd_sent signal after sending the command
     if (wait_for_ack)
       wait_for_sig(clk, cmd_sent, 200000, 1'b1, "cmd_sent was not asserted after sending command", tb_err, cycles);
-
-    // wait for cal_done to be asserted
-    if (wait_for_cal)
-      wait_for_sig(clk, iDUT.cal_done, 200000, 1'b1, "cal_done was not asserted after sending command", tb_err, cycles);
 
     // wait for acknowledgement to be received
     if (wait_for_ack)

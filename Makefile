@@ -17,6 +17,13 @@ test:
 synth:
 	cd synthesis && design_vision -shell dc_shell -f KnightsTour.dc
 
+post: synth
+	cd postsynth &&\
+	rm -rf work  &&\
+	vlog *.sv    &&\
+	vlog *.vg    &&\
+	vsim -L SAED32_lib -voptargs="+acc -L SAED32_lib" "+notimingchecks" work.test_postsynth -c -do "run -all;exit"
+
 clean:
 	rm -rf work
 	rm -f synthesis/*.syn
