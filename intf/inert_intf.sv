@@ -45,7 +45,6 @@ module inert_intf(clk,rst_n,strt_cal,cal_done,heading,rdy,lftIR,
     else
       timer <= timer + 1;
 
-  wire INT_stable;
   reg last_int, cur_int;
   always_ff @(posedge clk) begin
     cur_int <= INT;
@@ -79,7 +78,6 @@ module inert_intf(clk,rst_n,strt_cal,cal_done,heading,rdy,lftIR,
                            .rdy(rdy),.cal_done(cal_done), .yaw_rt(yaw_rt),.moving(moving),.lftIR(lftIR),
                            .rghtIR(rghtIR),.heading(heading));
 
-  assign INT_stable = cur_int & ~last_int;
 
   inert_intf_state_t state, nxt_state;
   always_ff @(posedge clk, negedge rst_n)
@@ -127,7 +125,7 @@ module inert_intf(clk,rst_n,strt_cal,cal_done,heading,rdy,lftIR,
   
       IDLE: begin
         cmd = 16'hA600;
-        if (INT_stable) begin
+        if (last_int) begin
           wrt = 1;
   	  nxt_state = READL;
         end

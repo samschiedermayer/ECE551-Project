@@ -127,6 +127,8 @@ module test_postsynth();
     $display("Initializing the DUT...");
     initialize();
 
+    // send command to calibrate
+    sendCommand(16'h0000,1'b1,1'b1,350000);
 
     // finish the test
     if (tb_err === 0)

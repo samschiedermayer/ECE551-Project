@@ -12,6 +12,7 @@ all:
 test:
 	vlog tests/*.sv
 	vsim -c -do "run -all;exit" test_base
+	vsim -c -do "run -all;exit" test_moving
 	vsim -c -do "run -all;exit" test_tour
 
 synth:
