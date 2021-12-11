@@ -6,8 +6,7 @@ module test_tour();
   /////////////////////////////
   // Stimulus of type reg //
   /////////////////////////
-  reg clk, RST_n;
-  reg [15:0] cmd;
+  reg clk, RST_n; reg [15:0] cmd;
   reg send_cmd;
   
   ///////////////////////////////////
@@ -119,43 +118,74 @@ module test_tour();
   endtask : moveWestOneSquare
 
 
-   
+  logic sample;   
   initial begin
     tb_err = 0;
+    sample = 0;
 
     // initialize the DUT
     $display("Initializing the DUT...");
     initialize();
 
 
-    // send the calibrate command to the DUT
+    // CALIBRATE //
     $display("Sending calibrate command to DUT...");
     sendCommand(16'h0000,1'b1,1'b1,350000);
 
 
-    // send the command to begin the tour
+    // BEGIN TOUR //
     $display("Sending tour(2,2) command to DUT...");
     sendCommand(16'h4022,1'b0,1'b0,1000000);
 
     wait_for_sig(clk, iDUT.tour_go, 8000000, 1'b1, "tour_go was not asserted after sending a tour command", tb_err, cycles);
     wait_for_sig(clk, iDUT.start_tour, 10000000, 1'b1, "start_tour was not asserted after tour_go was asserted", tb_err, cycles);
 
-    repeat (2) @(posedge clk);
 
-    err_on_cond_false(5'h00===iDUT.mv_indx,tb_err,"move index was not 0 at the start of the tour");
-    err_on_cond_false(3'h0===iDUT.move,tb_err,"first move was not 0 at the start of the tour");
-
-
-    // TODO test the first two actual movements of the DUT here
-    // validate the first move of the tour
+    // MOVE 1 //
     $display("Validating the first move of the tour...");
 
+    // ensure that the command is sent for the first move of the first tour
+    wait_for_sig(clk, iDUT.cmd_rdy,2000000, 1'b1, "first move of the tour did not start", tb_err, cycles);
 
-    // validate the second move of the tour
+    // ensure that the first move is the correct move number
+    repeat (2) @(posedge clk);
+    err_on_cond_false(5'h00===iDUT.mv_indx,tb_err,"move index was not 0 at the start of the tour");
+    err_on_cond_false(3'h0===iDUT.move,tb_err,"first move was not 0 at the start of the tour");
+    err_on_cond_false(16'h2002===iDUT.cmd,tb_err,"first half of the first move is not 2 north as expected");
+
+    wait_for_sig(clk, iDUT.cmd_rdy,12000000, 1'b1, "first half of the first move of the tour did not finish", tb_err, cycles);
+
+    // validate the first move of the tour
+    repeat (2) @(posedge clk);
+    err_on_cond_false(16'h33f1===iDUT.cmd,tb_err,"second half of the first move is not 1 west as expected");
+
+    wait_for_sig(clk, iDUT.cmd_rdy, 12000000, 1'b1, "first move of the tour did not finish", tb_err, cycles);
+
+
+    // MOVE 2 //
     $display("Validating the second move of the tour...");
 
+    // check the move that is active, and whether the command for the first half is correct
+    repeat (2) @(posedge clk);
+    err_on_cond_false(5'h01===iDUT.mv_indx,tb_err,"move index was not 1 after first move of tour");
+    err_on_cond_false(3'h4===iDUT.move,tb_err,"second move was not 4");
+    err_on_cond_false(16'h27f2===iDUT.cmd,tb_err,"first half of the second move is not 2 south as expected");
 
-    // ENDTODO
+    // make sure the first half of the first move finishes
+    wait_for_sig(clk, iDUT.cmd_rdy, 12000000, 1'b1, "first half of second move of the tour did not finish", tb_err, cycles);
+
+    // make sure that the second half of the second move has the correct command
+    repeat (2) @(posedge clk);
+    err_on_cond_false(16'h33f1===iDUT.cmd,tb_err,"second half of the second move is not 1 west as expected");
+
+    // ensure that the second half of the second move finishes
+    wait_for_sig(clk, iDUT.cmd_rdy, 12000000, 1'b1, "second half of second move of the tour did not finish", tb_err, cycles);
+
+    // ensure that the third move is loaded correctly after the second move finishes
+    err_on_cond_false(5'h02===iDUT.mv_indx,tb_err,"move index was not 2 after second move of tour");
+    err_on_cond_false(3'h5===iDUT.move,tb_err,"first move was not 0 at the start of the tour");
+
+
     // finish the test
     if (tb_err === 0)
       $display("Yahoo! All tests passed :)");

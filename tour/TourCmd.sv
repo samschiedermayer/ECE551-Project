@@ -9,7 +9,7 @@ module TourCmd(clk,rst_n,start_tour,move,mv_indx,
   input [15:0] cmd_UART;	// cmd from UART_wrapper
   input cmd_rdy_UART;		// cmd_rdy from UART_wrapper
   output logic [15:0] cmd;		// multiplexed cmd to cmd_proc
-  output cmd_rdy;			// cmd_rdy signal to cmd_proc
+  output logic cmd_rdy;			// cmd_rdy signal to cmd_proc
   input clr_cmd_rdy;		// from cmd_proc (goes to UART_wrapper too)
   input send_resp;			// lets us know cmd_proc is done with command
   output [7:0] resp;		// either 0xA5 (done) or 0x5A (in progress)
@@ -24,7 +24,9 @@ logic [15:0] cmd_tour, nxt_cmd_tour;
 // Muxes                                                    //
 /////////////////////////////////////////////////////////////
 assign cmd = sel ? cmd_tour: cmd_UART; 
-assign cmd_rdy = sel ? cmd_rdy_tour: cmd_rdy_UART;
+
+always_ff @(posedge clk)
+  cmd_rdy <= sel ? cmd_rdy_tour : cmd_rdy_UART;
 
 ///////////////////////////////////////////////////////////////
 // mv_indx counter                                          //
@@ -76,6 +78,7 @@ always_comb begin
    increment = 0;
    cmd_rdy_tour = 0;
    nxt_state = state;
+   nxt_cmd_tour = cmd_tour;
 
    case(state)
       IDLE: begin

@@ -30,7 +30,7 @@ module KnightsTour(
   wire moving;							// clear I in PID and don't integrate yaw if not moving
   wire send_resp;						// send either 0xA5 (done) or 0x5A (in progress)
   wire resp_sent;
-  wire cmd_rdy;							// multiplexed cmd_rdy
+  logic cmd_rdy;							// multiplexed cmd_rdy
   wire cmd_rdy_UART;					// cmd ready from UART/Bluetooth  
   wire [9:0] frwrd;						// forward speed
   wire [15:0] cmd;						// multiplexed cmd from TourCmd
