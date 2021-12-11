@@ -71,7 +71,7 @@ report_timing -delay min > min_delay.txt
 report_area > KnightsTour_area.txt
 
 # write out resulting synthesized netlist
-write -format verilog KnightsTour -output KnightsTour.vg
+write -format verilog KnightsTour -output ../postsynth/KnightsTour.vg
 
 # write out settings
 write_sdc KnightsTour_sdc.txt
