@@ -107,6 +107,27 @@ module test_moving();
     checkPositiveAck(timeout);
 
   endtask : sendCommand
+
+  task automatic sendCommandFanfare(input logic [15:0] cmd_to_send, input logic wait_for_cal, input integer timeout);
+
+    @(negedge clk);
+    cmd = cmd_to_send;
+    send_cmd = 1;
+    @(negedge clk);
+    send_cmd = 0;
+
+    wait_for_sig(clk, cmd_sent, 200000, 1'b1, "cmd_sent was not asserted after sending command", tb_err, cycles);
+
+    // wait for cal_done to be asserted
+    if (wait_for_cal)
+      wait_for_sig(clk, iDUT.cal_done, 200000, 1'b1, "cal_done was not asserted after sending command", tb_err, cycles);
+
+    wait_for_sig(clk, iDUT.iCMD.fanfare_go, 10000000, 1'b1, "fanfare_go was not asserted after sending command", tb_err, cycles);
+
+    // wait for acknowledgement to be received
+    checkPositiveAck(timeout);
+
+  endtask : sendCommandFanfare
    
   initial begin
     tb_err = 0;
@@ -181,10 +202,10 @@ module test_moving();
     end 
 
     ///////////////////////////////////////////////////////////////////
-    // Moving 1 square south     				    //
+    // Moving 1 square south with fanfare			    //
     /////////////////////////////////////////////////////////////////
     $display("moving 1 square south");
-    sendCommand(16'h27f1,1'b0,4000000);
+    sendCommandFanfare(16'h37f1,1'b0,4000000);
 
     if (!(iDUT.iCMD.heading > 12'h7ee)) begin
       $display("heading is not close to 7ff");
